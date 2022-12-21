@@ -18,7 +18,7 @@ const data = {
       category: 'Ulei',
       image: '/images/p2.jpg',
       price: 32,
-      countInStock: 12,
+      countInStock: 0,
       brand: 'Arom Science',
       rating: 4.5,
       numReviews: 10,
