@@ -1,6 +1,22 @@
+import bcrypt from 'bcryptjs';
 const data = {
+  users: [
+    {
+      name: 'Laura',
+      email: 'admin@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: true,
+    },
+    {
+      name: 'John',
+      email: 'user@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
+      // _id: '1',
       name: 'Ceai negru',
       slug: 'ceai-negru',
       category: 'Ceai',
@@ -13,6 +29,7 @@ const data = {
       description: 'Produs de inalta calitate',
     },
     {
+      // _id: '2',
       name: 'Ulei esential arbore de ceai',
       slug: 'ulei-esential-arbore-de-ceai',
       category: 'Ulei',
@@ -25,6 +42,7 @@ const data = {
       description: 'Produs de inalta calitate',
     },
     {
+      // _id: '3',
       name: 'Sirop vitamine',
       slug: 'sirop-vitamine',
       category: 'Sirop',
@@ -37,6 +55,7 @@ const data = {
       description: 'Produs de inalta calitate',
     },
     {
+      // _id: '4',
       name: 'Lecitina forte',
       slug: 'lecitina-forte',
       category: 'Suplimente',
