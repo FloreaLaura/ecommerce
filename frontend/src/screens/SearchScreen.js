@@ -132,11 +132,11 @@ export default function SearchScreen() {
   return (
     <div>
       <Helmet>
-        <title>Search Products</title>
+        <title>Cauta produse</title>
       </Helmet>
       <Row>
         <Col md={3}>
-          <h3>Department</h3>
+          <h3>Categorie</h3>
           <div>
             <ul>
               <li>
@@ -144,7 +144,7 @@ export default function SearchScreen() {
                   className={'all' === category ? 'text-bold' : ''}
                   to={getFilterUrl({ category: 'all' })}
                 >
-                  Any
+                  Toate
                 </Link>
               </li>
               {categories.map((c) => (
@@ -160,14 +160,14 @@ export default function SearchScreen() {
             </ul>
           </div>
           <div>
-            <h3>Price</h3>
+            <h3>Pret</h3>
             <ul>
               <li>
                 <Link
                   className={'all' === price ? 'text-bold' : ''}
                   to={getFilterUrl({ price: 'all' })}
                 >
-                  Any
+                  Toate
                 </Link>
               </li>
               {prices.map((p) => (
@@ -183,7 +183,7 @@ export default function SearchScreen() {
             </ul>
           </div>
           <div>
-            <h3>Avg. Customer Review</h3>
+            <h3>Reviews</h3>
             <ul>
               {ratings.map((r) => (
                 <li key={r.name}>
@@ -235,17 +235,17 @@ export default function SearchScreen() {
                   </div>
                 </Col>
                 <Col className="text-end">
-                  Sort by{' '}
+                  Sortati dupa{' '}
                   <select
                     value={order}
                     onChange={(e) => {
                       navigate(getFilterUrl({ order: e.target.value }));
                     }}
                   >
-                    <option value="newest">Newest Arrivals</option>
-                    <option value="lowest">Price: Low to High</option>
-                    <option value="highest">Price: High to Low</option>
-                    <option value="toprated">Avg. Customer Reviews</option>
+                    <option value="newest">Cele mai noi</option>
+                    <option value="lowest">Pret crescator</option>
+                    <option value="highest">Pret descrescator</option>
+                    <option value="toprated">Recenzii</option>
                   </select>
                 </Col>
               </Row>

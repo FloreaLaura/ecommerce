@@ -78,10 +78,15 @@ function App() {
         >
           <ToastContainer position="bottom-center" limit={1} />
           <header>
-            <Navbar bg="dark" variant="dark" expand="lg">
+            <Navbar
+              variant="dark"
+              expand="lg"
+              style={{ backgroundColor: '#eeeeee' }}
+            >
               <Container>
                 <Button
-                  variant="dark"
+                  className="btn-sidebar"
+                  variant="#eeeeee"
                   onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
                 >
                   <i className="fas fa-bars"></i>
@@ -95,7 +100,7 @@ function App() {
                   <SearchBox />
                   <Nav className="me-auto  w-100  justify-content-end">
                     <Link to="/cart" className="nav-link">
-                      Cart
+                      Cos de cumparaturi
                       {cart.cartItems.length > 0 && (
                         <Badge pill bg="danger">
                           {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
@@ -111,7 +116,9 @@ function App() {
                           <NavDropdown.Item>User Profile</NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/orderhistory">
-                          <NavDropdown.Item>Order History</NavDropdown.Item>
+                          <NavDropdown.Item>
+                            Istoric de cumparaturi
+                          </NavDropdown.Item>
                         </LinkContainer>
                         <NavDropdown.Divider />
                         <Link
@@ -157,7 +164,7 @@ function App() {
           >
             <Nav className="flex-column text-white w-100 p-2">
               <Nav.Item>
-                <strong>Categories</strong>
+                <strong>Categorii</strong>
               </Nav.Item>
               {categories.map((category) => (
                 <Nav.Item key={category}>

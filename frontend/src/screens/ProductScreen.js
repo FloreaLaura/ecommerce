@@ -202,7 +202,7 @@ function ProductScreen() {
                   <ListGroup.Item>
                     <div className="d-grid">
                       <Button onClick={addToCartHandler} variant="primary">
-                        Add to Cart
+                        Adauga in cos
                       </Button>
                     </div>
                   </ListGroup.Item>
