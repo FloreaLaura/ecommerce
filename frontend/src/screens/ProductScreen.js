@@ -157,16 +157,21 @@ function ProductScreen() {
                         variant="light"
                         onClick={() => setSelectedImage(x)}
                       >
-                        <Card.Img variant="top" src={x} alt="product" />
+                        <Card.Img
+                          variant="top"
+                          src={x}
+                          alt="product"
+                          className="imgThumbnail"
+                        />
                       </Button>
                     </Card>
                   </Col>
                 ))}
               </Row>
             </ListGroup.Item>
-            <ListGroup.Item>
-              Description:
-              <p>{product.description}</p>
+            <ListGroup.Item className="listGroupDescription">
+              <p className="description"> Descriere: </p>
+              <p className="descriptionText">{product.description}</p>
             </ListGroup.Item>
           </ListGroup>
         </Col>
