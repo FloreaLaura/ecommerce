@@ -4,7 +4,7 @@ import {
   LoadScript,
   GoogleMap,
   StandaloneSearchBox,
-  Marker,
+  MarkerF,
 } from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
@@ -96,6 +96,7 @@ export default function MapScreen() {
     toast.success('location selected successfully.');
     navigate('/shipping');
   };
+
   return (
     <div className="full-box">
       <LoadScript libraries={libs} googleMapsApiKey={googleApiKey}>
@@ -118,7 +119,7 @@ export default function MapScreen() {
               </Button>
             </div>
           </StandaloneSearchBox>
-          <Marker position={location} onLoad={onMarkerLoad}></Marker>
+          <MarkerF position={location} onLoad={onMarkerLoad}></MarkerF>
         </GoogleMap>
       </LoadScript>
     </div>
