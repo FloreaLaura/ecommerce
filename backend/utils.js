@@ -55,17 +55,19 @@ export const mailgun = () =>
   });
 
 export const payOrderEmailTemplate = (order) => {
-  return `<h1>Thanks for shopping with us</h1>
+  return `<h2>Îți mulţumim că ai apelat la NaturShop şi pentru încrederea acordată magazinului nostru.</h2>
   <p>
-  Hi ${order.user.name},</p>
-  <p>We have finished processing your order.</p>
-  <h2>[Order ${order._id}] (${order.createdAt.toString().substring(0, 10)})</h2>
+  Bună, ${order.user.name},</p>
+  <p>Comanda dumneavoastră este în curs de procesare. Găsiți mai jos detaliile comenzii.</p>
+  <h2>[Comanda ${order._id}] (${order.createdAt
+    .toString()
+    .substring(0, 10)})</h2>
   <table>
   <thead>
   <tr>
-  <td><strong>Product</strong></td>
-  <td><strong>Quantity</strong></td>
-  <td><strong align="right">Price</strong></td>
+  <td><strong align="left">Produse</strong></td>
+  <td><strong align="center">Cantitate</strong></td>
+  <td><strong align="right">Pret</strong></td>
   </thead>
   <tbody>
   ${order.orderItems
@@ -74,7 +76,7 @@ export const payOrderEmailTemplate = (order) => {
     <tr>
     <td>${item.name}</td>
     <td align="center">${item.quantity}</td>
-    <td align="right"> $${item.price.toFixed(2)}</td>
+    <td align="right"> ${item.price.toFixed(2)} RON</td>
     </tr>
   `
     )
@@ -82,34 +84,37 @@ export const payOrderEmailTemplate = (order) => {
   </tbody>
   <tfoot>
   <tr>
-  <td colspan="2">Items Price:</td>
-  <td align="right"> $${order.itemsPrice.toFixed(2)}</td>
+  <td colspan="2">Prețul articolelor:</td>
+  <td align="right"> ${order.itemsPrice.toFixed(2)} RON</td>
   </tr>
   <tr>
-  <td colspan="2">Shipping Price:</td>
-  <td align="right"> $${order.shippingPrice.toFixed(2)}</td>
+  <td colspan="2">Taxe de transport:</td>
+  <td align="right"> ${order.shippingPrice.toFixed(2)} RON</td>
   </tr>
   <tr>
-  <td colspan="2"><strong>Total Price:</strong></td>
-  <td align="right"><strong> $${order.totalPrice.toFixed(2)}</strong></td>
+  <td colspan="2"><strong>Pret total:</strong></td>
+  <td align="right"><strong> ${order.totalPrice.toFixed(2)} RON</strong></td>
   </tr>
   <tr>
-  <td colspan="2">Payment Method:</td>
+  <td colspan="2">Metoda de plata:</td>
   <td align="right">${order.paymentMethod}</td>
   </tr>
   </table>
 
-  <h2>Shipping address</h2>
+  <h2>Detaliile comenzii:</h2>
   <p>
-  ${order.shippingAddress.fullName},<br/>
-  ${order.shippingAddress.address},<br/>
-  ${order.shippingAddress.city},<br/>
-  ${order.shippingAddress.country},<br/>
-  ${order.shippingAddress.postalCode}<br/>
+  Nume: ${order.shippingAddress.fullName}<br/>
+  Adresa: ${order.shippingAddress.address}<br/>
+  Oraș: ${order.shippingAddress.city}<br/>
+  Țara: ${order.shippingAddress.country}<br/>
+  Cod poștal: ${order.shippingAddress.postalCode}<br/>
   </p>
   <hr/>
   <p>
-  Thanks for shopping with us.
+  Sperăm că te vei bucura de produsele noastre.<br/>
+
+  Cu prietenie,<br/>
+  Echipa NaturShop
   </p>
   `;
 };

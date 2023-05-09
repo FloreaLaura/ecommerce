@@ -142,9 +142,9 @@ orderRouter.put(
         .messages()
         .send(
           {
-            from: 'Amazona <amazona@mg.yourdomain.com>',
+            from: 'NaturShop <service@mail.naturshop.com>',
             to: `${order.user.name} <${order.user.email}>`,
-            subject: `New order ${order._id}`,
+            subject: `Comanda noua ${order._id}`,
             html: payOrderEmailTemplate(order),
           },
           (error, body) => {
@@ -156,9 +156,9 @@ orderRouter.put(
           }
         );
 
-      res.send({ message: 'Order Paid', order: updatedOrder });
+      res.send({ message: 'Comanda platita', order: updatedOrder });
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({ message: 'Comanda nu a fost inregistrata' });
     }
   })
 );
@@ -171,9 +171,9 @@ orderRouter.delete(
     const order = await Order.findById(req.params.id);
     if (order) {
       await order.remove();
-      res.send({ message: 'Order Deleted' });
+      res.send({ message: 'Comanda stearsa' });
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({ message: 'Comanda nu a fost gasita' });
     }
   })
 );

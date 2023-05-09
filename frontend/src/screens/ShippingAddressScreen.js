@@ -60,7 +60,7 @@ export default function ShippingAddressScreen() {
   return (
     <div>
       <Helmet>
-        <title>Shipping Address</title>
+        <title>Informatii livrare</title>
       </Helmet>
 
       <CheckoutSteps step1 step2></CheckoutSteps>
@@ -68,7 +68,7 @@ export default function ShippingAddressScreen() {
         <h1 className="my-3">Shipping Address</h1>
         <Form onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="fullName">
-            <Form.Label>Full Name</Form.Label>
+            <Form.Label>Nume</Form.Label>
             <Form.Control
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
@@ -76,7 +76,7 @@ export default function ShippingAddressScreen() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="address">
-            <Form.Label>Address</Form.Label>
+            <Form.Label>Adresa</Form.Label>
             <Form.Control
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -84,7 +84,7 @@ export default function ShippingAddressScreen() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="city">
-            <Form.Label>City</Form.Label>
+            <Form.Label>Localitate</Form.Label>
             <Form.Control
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -92,7 +92,7 @@ export default function ShippingAddressScreen() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="postalCode">
-            <Form.Label>Postal Code</Form.Label>
+            <Form.Label>Cod postal</Form.Label>
             <Form.Control
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
@@ -100,7 +100,7 @@ export default function ShippingAddressScreen() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="country">
-            <Form.Label>Country</Form.Label>
+            <Form.Label>Tara</Form.Label>
             <Form.Control
               value={country}
               onChange={(e) => setCountry(e.target.value)}
@@ -114,21 +114,21 @@ export default function ShippingAddressScreen() {
               variant="light"
               onClick={() => navigate('/map')}
             >
-              Choose Location On Map
+              Alege locatia pe harta
             </Button>
             {shippingAddress.location && shippingAddress.location.lat ? (
               <div>
-                LAT: {shippingAddress.location.lat}
-                LNG:{shippingAddress.location.lng}
+                Latitudine: {shippingAddress.location.lat}
+                Longitudine:{shippingAddress.location.lng}
               </div>
             ) : (
-              <div>No location</div>
+              <div>Fara locatie</div>
             )}
           </div>
 
           <div className="mb-3">
             <Button variant="primary" type="submit">
-              Continue
+              Continua
             </Button>
           </div>
         </Form>
