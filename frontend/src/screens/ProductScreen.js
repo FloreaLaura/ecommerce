@@ -88,7 +88,7 @@ function ProductScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!comment || !rating) {
-      toast.error('Please enter comment and rating');
+      toast.error('Vă rugăm să introduceți comentariul și evaluarea');
       return;
     }
     try {
@@ -139,13 +139,14 @@ function ProductScreen() {
               </Helmet>
               <h1>{product.name}</h1>
             </ListGroup.Item>
+            <ListGroup.Item>Pret: {product.price} RON</ListGroup.Item>
             <ListGroup.Item>
               <Rating
                 rating={product.rating}
                 numReviews={product.numReviews}
               ></Rating>
             </ListGroup.Item>
-            <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
+            <ListGroup.Item>Producator: {product.brand}</ListGroup.Item>
             <ListGroup.Item>
               <Row xs={1} md={2} className="g-2">
                 {[product.image, ...product.images].map((x) => (
@@ -234,7 +235,6 @@ function ProductScreen() {
             <form onSubmit={submitHandler}>
               <h2>Adauga o recenzie</h2>
               <Form.Group className="mb-3" controlId="rating">
-                <Form.Label>Rating</Form.Label>
                 <Form.Select
                   aria-label="Rating"
                   value={rating}

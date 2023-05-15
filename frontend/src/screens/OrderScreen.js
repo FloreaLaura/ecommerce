@@ -220,7 +220,7 @@ export default function OrderScreen() {
               </Card.Text>
               {order.isDelivered ? (
                 <MessageBox variant="success">
-                  Livrat la {order.deliveredAt}
+                  Livrat la {order.deliveredAt.substring(0, 10)}
                 </MessageBox>
               ) : (
                 <MessageBox variant="danger">Nu a fost livrat</MessageBox>

@@ -71,13 +71,13 @@ export default function UserListScreen() {
   }, [userInfo, successDelete]);
 
   const deleteHandler = async (user) => {
-    if (window.confirm('Are you sure to delete?')) {
+    if (window.confirm('Esti sigur ca doresti sa elimini acest utilizator?')) {
       try {
         dispatch({ type: 'DELETE_REQUEST' });
         await axios.delete(`/api/users/${user._id}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        toast.success('user deleted successfully');
+        toast.success('Utilizatorul a fost sters cu succes');
         dispatch({ type: 'DELETE_SUCCESS' });
       } catch (error) {
         toast.error(getError(error));
@@ -90,9 +90,9 @@ export default function UserListScreen() {
   return (
     <div>
       <Helmet>
-        <title>Users</title>
+        <title>Utilizatori</title>
       </Helmet>
-      <h1>Users</h1>
+      <h1>Utilizatori</h1>
 
       {loadingDelete && <LoadingBox></LoadingBox>}
       {loading ? (
@@ -103,11 +103,11 @@ export default function UserListScreen() {
         <table className="table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>NAME</th>
+              <th>ID UTILIZATOR</th>
+              <th>NUME</th>
               <th>EMAIL</th>
-              <th>IS ADMIN</th>
-              <th>ACTIONS</th>
+              <th>ESTE ADMINISTRATOR</th>
+              <th>ACTIUNI</th>
             </tr>
           </thead>
           <tbody>
@@ -116,14 +116,14 @@ export default function UserListScreen() {
                 <td>{user._id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.isAdmin ? 'YES' : 'NO'}</td>
+                <td>{user.isAdmin ? 'DA' : 'NU'}</td>
                 <td>
                   <Button
                     type="button"
                     variant="light"
                     onClick={() => navigate(`/admin/user/${user._id}`)}
                   >
-                    Edit
+                    Editeaza
                   </Button>
                   &nbsp;
                   <Button
@@ -131,7 +131,7 @@ export default function UserListScreen() {
                     variant="light"
                     onClick={() => deleteHandler(user)}
                   >
-                    Delete
+                    Sterge
                   </Button>
                 </td>
               </tr>

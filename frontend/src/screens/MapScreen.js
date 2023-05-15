@@ -93,7 +93,7 @@ export default function MapScreen() {
         googleAddressId: places[0].id,
       },
     });
-    toast.success('location selected successfully.');
+    toast.success('Locatia a fost selectata cu succes.');
     navigate('/shipping');
   };
   return (

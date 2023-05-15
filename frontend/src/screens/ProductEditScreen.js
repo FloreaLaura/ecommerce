@@ -114,7 +114,7 @@ export default function ProductEditScreen() {
       dispatch({
         type: 'UPDATE_SUCCESS',
       });
-      toast.success('Product updated successfully');
+      toast.success('Produs actualizat cu succes');
       navigate('/admin/products');
     } catch (err) {
       toast.error(getError(err));

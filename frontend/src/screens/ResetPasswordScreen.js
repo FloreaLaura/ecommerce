@@ -28,7 +28,7 @@ export default function ResetPasswordScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error('Parolele nu coincid');
       return;
     }
     try {
@@ -37,7 +37,7 @@ export default function ResetPasswordScreen() {
         token,
       });
       navigate('/signin');
-      toast.success('Password updated successfully');
+      toast.success('Parola a fost actualizata cu succes');
     } catch (err) {
       toast.error(getError(err));
     }
