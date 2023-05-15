@@ -156,6 +156,7 @@ userRouter.delete(
     }
   })
 );
+
 userRouter.post(
   '/signin',
   expressAsyncHandler(async (req, res) => {
@@ -192,6 +193,24 @@ userRouter.post(
       isAdmin: user.isAdmin,
       token: generateToken(user),
     });
+  })
+);
+
+userRouter.get(
+  '/getUserInfo',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      res.send({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      });
+    } else {
+      res.status(404).send({ message: 'User not found' });
+    }
   })
 );
 

@@ -24,9 +24,11 @@ import Button from 'react-bootstrap/Button';
 import { getError } from './utils';
 import axios from 'axios';
 import SearchBox from './components/SearchBox';
+import ChatBox from './components/ChatBox';
 import SearchScreen from './screens/SearchScreen';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardScreen from './screens/DashboardScreen';
+import SupportScreen from './screens/SupportScreen';
 import AdminRoute from './components/AdminRoute';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
@@ -36,6 +38,7 @@ import UserEditScreen from './screens/UserEditScreen';
 import MapScreen from './screens/MapScreen';
 import ForgetPasswordScreen from './screens/ForgetPasswordScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
+import ProductCreateScreen from './screens/ProductCreateScreen';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -148,6 +151,9 @@ function App() {
                         <LinkContainer to="/admin/users">
                           <NavDropdown.Item>Users</NavDropdown.Item>
                         </LinkContainer>
+                        <LinkContainer to="/admin/support">
+                          <NavDropdown.Item> Support </NavDropdown.Item>
+                        </LinkContainer>
                       </NavDropdown>
                     )}
                   </Nav>
@@ -186,6 +192,11 @@ function App() {
                 <Route path="/search" element={<SearchScreen />} />
                 <Route path="/signin" element={<SigninScreen />} />
                 <Route path="/signup" element={<SignupScreen />} />
+                <Route
+                  path="/create-product"
+                  element={<ProductCreateScreen />}
+                />
+
                 <Route
                   path="/forget-password"
                   element={<ForgetPasswordScreen />}
@@ -246,6 +257,14 @@ function App() {
                   }
                 ></Route>
                 <Route
+                  path="/admin/support"
+                  element={
+                    <AdminRoute>
+                      <SupportScreen />
+                    </AdminRoute>
+                  }
+                ></Route>
+                <Route
                   path="/admin/orders"
                   element={
                     <AdminRoute>
@@ -290,6 +309,9 @@ function App() {
               </Routes>
             </Container>
           </main>
+          <footer className="row center">
+            {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+          </footer>
         </div>
       </div>
     </BrowserRouter>

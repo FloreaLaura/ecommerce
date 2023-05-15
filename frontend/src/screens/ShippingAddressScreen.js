@@ -20,6 +20,19 @@ export default function ShippingAddressScreen() {
   const [postalCode, setPostalCode] = useState(
     shippingAddress.postalCode || ''
   );
+
+  useEffect(() => {
+    const shippingAddress = localStorage.getItem('shippingAddress');
+    if (shippingAddress) {
+      const parsedShippingAddress = JSON.parse(shippingAddress);
+      setFullName(parsedShippingAddress.fullName || '');
+      setAddress(parsedShippingAddress.address || '');
+      setCity(parsedShippingAddress.city || '');
+      setPostalCode(parsedShippingAddress.postalCode || '');
+      setCountry(parsedShippingAddress.country || '');
+    }
+  }, []);
+
   useEffect(() => {
     if (!userInfo) {
       navigate('/signin?redirect=/shipping');
@@ -52,6 +65,21 @@ export default function ShippingAddressScreen() {
     );
     navigate('/payment');
   };
+
+  function navigateonMap() {
+    localStorage.setItem(
+      'shippingAddress',
+      JSON.stringify({
+        fullName,
+        address,
+        city,
+        postalCode,
+        country,
+        location: shippingAddress.location,
+      })
+    );
+    navigate('/map');
+  }
 
   useEffect(() => {
     ctxDispatch({ type: 'SET_FULLBOX_OFF' });
@@ -112,7 +140,8 @@ export default function ShippingAddressScreen() {
               id="chooseOnMap"
               type="button"
               variant="light"
-              onClick={() => navigate('/map')}
+              onClick={navigateonMap}
+              // {() => navigate('/map')}
             >
               Alege locatia pe harta
             </Button>

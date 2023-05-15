@@ -97,24 +97,7 @@ export default function ProductListScreen() {
 
   const createHandler = async () => {
     if (window.confirm('Are you sure to create?')) {
-      try {
-        dispatch({ type: 'CREATE_REQUEST' });
-        const { data } = await axios.post(
-          '/api/products',
-          {},
-          {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-          }
-        );
-        toast.success('product created successfully');
-        dispatch({ type: 'CREATE_SUCCESS' });
-        navigate(`/admin/product/${data.product._id}`);
-      } catch (err) {
-        toast.error(getError(error));
-        dispatch({
-          type: 'CREATE_FAIL',
-        });
-      }
+      <Link to="/create-product">Create Product</Link>;
     }
   };
 
@@ -143,9 +126,12 @@ export default function ProductListScreen() {
         </Col>
         <Col className="col text-end">
           <div>
-            <Button type="button" onClick={createHandler}>
+            {/* <Button type="button" onClick={createHandler}>
               Create Product
-            </Button>
+            </Button> */}
+            <Link to="/create-product">
+              <button type="button">Create Product</button>
+            </Link>
           </div>
         </Col>
       </Row>

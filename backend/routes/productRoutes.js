@@ -32,6 +32,91 @@ productRouter.post(
   })
 );
 
+productRouter.post(
+  '/create',
+  expressAsyncHandler(async (req, res) => {
+    const product = new Product({
+      name: req.body.name,
+      slug: req.body.slug,
+      price: req.body.price,
+      image: req.body.image,
+      images: req.body.images,
+      category: req.body.category,
+      countInStock: req.body.countInStock,
+      brand: req.body.brand,
+      description: req.body.description,
+      numReviews: req.body.numReviews,
+      rating: req.body.rating,
+    });
+    const createdProduct = await product.save();
+    res.status(201).send({
+      message: 'Product created successfully.',
+      product: createdProduct,
+    });
+  })
+);
+
+productRouter.post(
+  '/add',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const {
+      name,
+      slug,
+      image,
+      price,
+      category,
+      brand,
+      countInStock,
+      description,
+    } = req.body;
+
+    const product = new Product({
+      name,
+      slug,
+      image,
+      price,
+      category,
+      brand,
+      countInStock,
+      description,
+    });
+
+    const createdProduct = await product.save();
+
+    res
+      .status(201)
+      .send({ message: 'Product Created', product: createdProduct });
+  })
+);
+
+productRouter.post('/upload', (req, res) => {
+  const product = new Product({
+    name: req.body.name,
+    slug: req.body.slug,
+    price: req.body.price,
+    image: req.body.image,
+    images: req.body.images,
+    category: req.body.category,
+    brand: req.body.brand,
+    countInStock: req.body.countInStock,
+    description: req.body.description,
+  });
+
+  product
+    .save()
+    .then((savedProduct) => {
+      res.status(201).send(savedProduct);
+    })
+    .catch((err) => {
+      console.log(err);
+      res
+        .status(500)
+        .send({ message: 'An error occurred while saving the product.' });
+    });
+});
+
 productRouter.put(
   '/:id',
   isAuth,

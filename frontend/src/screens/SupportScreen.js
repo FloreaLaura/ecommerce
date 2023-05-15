@@ -1,14 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import socketIOClient from 'socket.io-client';
-import { useSelector } from 'react-redux';
 import MessageBox from '../components/MessageBox';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { getError } from '../utils';
+import { Store } from '../Store';
 
 let allUsers = [];
 let allMessages = [];
 let allSelectedUser = {};
 const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0
-    ? 'http://127.0.0.1:5000'
+    ? 'http://localhost:4000'
     : window.location.host;
 
 export default function SupportScreen() {
@@ -18,8 +21,28 @@ export default function SupportScreen() {
   const [messageBody, setMessageBody] = useState('');
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+  const [setUserInfo] = useState({});
+  const { state } = useContext(Store);
+  const { userInfo } = state;
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const { data } = await axios.get(
+          `/api/users/getUserInfo/${userInfo._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+        setUserInfo(data.data);
+      } catch (err) {
+        toast.error(getError(err));
+      }
+    };
+    fetchUserInfo();
+  }, []);
 
   useEffect(() => {
     if (uiMessagesRef.current) {
@@ -73,7 +96,7 @@ export default function SupportScreen() {
         setMessages(allMessages);
       });
     }
-  }, [messages, socket, users]);
+  }, [messages, socket, users, userInfo]);
 
   const selectUser = (user) => {
     allSelectedUser = user;

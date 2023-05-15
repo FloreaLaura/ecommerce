@@ -111,6 +111,8 @@ orderRouter.put(
     if (order) {
       order.isDelivered = true;
       order.deliveredAt = Date.now();
+      order.isPaid = true;
+      order.paidAt = Date.now();
       await order.save();
       res.send({ message: 'Order Delivered' });
     } else {

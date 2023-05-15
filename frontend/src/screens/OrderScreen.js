@@ -302,7 +302,8 @@ export default function OrderScreen() {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                {!order.isPaid && (
+
+                {!order.isPaid && order.paymentMethod == 'PayPal' && (
                   <ListGroup.Item>
                     {isPending ? (
                       <LoadingBox />
@@ -318,7 +319,14 @@ export default function OrderScreen() {
                     {loadingPay && <LoadingBox></LoadingBox>}
                   </ListGroup.Item>
                 )}
-                {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                {((userInfo.isAdmin &&
+                  order.isPaid &&
+                  !order.isDelivered &&
+                  order.paymentMethod == 'PayPal') ||
+                  (userInfo.isAdmin &&
+                    order.isPaid == false &&
+                    !order.isDelivered &&
+                    order.paymentMethod == 'Ramburs')) && (
                   <ListGroup.Item>
                     {loadingDeliver && <LoadingBox></LoadingBox>}
                     <div className="d-grid">

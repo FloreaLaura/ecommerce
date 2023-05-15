@@ -95,7 +95,6 @@ export default function MapScreen() {
     });
     toast.success('location selected successfully.');
     navigate('/shipping');
-    console.log('adresa estE', location);
   };
   return (
     <div className="full-box">
