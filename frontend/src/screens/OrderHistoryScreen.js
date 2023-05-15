@@ -55,7 +55,17 @@ export default function OrderHistoryScreen() {
         <title>Istoric cumparaturi</title>
       </Helmet>
 
-      <h1>Istoric cumparaturi</h1>
+      <h2>
+        {' '}
+        <img
+          src="images\history.png"
+          alt="Icon"
+          className="icon"
+          width="30"
+          height="30"
+        />
+        Istoric cumparaturi
+      </h2>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (

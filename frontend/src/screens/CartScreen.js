@@ -41,7 +41,16 @@ export default function CartScreen() {
       <Helmet>
         <title>Cos de cumparaturi</title>
       </Helmet>
-      <h1>Cos de cumparaturi</h1>
+      <h2>
+        <img
+          src="images\shopping.png"
+          alt="Icon"
+          className="icon"
+          width="30"
+          height="30"
+        />
+        Cos de cumparaturi
+      </h2>
       <Row>
         <Col md={8}>
           {cartItems.length === 0 ? (

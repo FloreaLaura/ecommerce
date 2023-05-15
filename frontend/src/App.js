@@ -95,13 +95,34 @@ function App() {
                 </Button>
 
                 <LinkContainer to="/">
-                  <Navbar.Brand>NaturShop</Navbar.Brand>
+                  <Navbar.Brand>
+                    <img
+                      src="images\leaf.png"
+                      alt="Icon"
+                      className="icon"
+                      width="30"
+                      height="30"
+                    />
+                    NaturShop
+                  </Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                   <SearchBox />
                   <Nav className="me-auto  w-100  justify-content-end">
-                    <Link to="/cart" className="nav-link">
+                    <Link
+                      to="/cart"
+                      className="nav-link"
+                      style={{ marginRight: '30px' }}
+                    >
+                      <img
+                        src="images\shopping.png"
+                        alt="Icon"
+                        className="icon"
+                        width="22"
+                        height="22"
+                        marginRight="0px"
+                      />
                       Cos de cumparaturi
                       {cart.cartItems.length > 0 && (
                         <Badge pill bg="danger">
@@ -115,15 +136,40 @@ function App() {
                         id="basic-nav-dropdown"
                       >
                         <LinkContainer to="/profile">
-                          <NavDropdown.Item>Profil</NavDropdown.Item>
+                          <NavDropdown.Item>
+                            <img
+                              src="images\person.png"
+                              alt="Icon"
+                              className="icon"
+                              width="20"
+                              height="20"
+                            />
+                            Profil
+                          </NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/orderhistory">
                           <NavDropdown.Item>
+                            <img
+                              src="images\history.png"
+                              alt="Icon"
+                              className="icon"
+                              width="20"
+                              height="20"
+                            />
                             Istoric cumparaturi
                           </NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/contact">
-                          <NavDropdown.Item>Contact</NavDropdown.Item>
+                          <NavDropdown.Item>
+                            <img
+                              src="images\contact.png"
+                              alt="Icon"
+                              className="icon"
+                              width="20"
+                              height="20"
+                            />
+                            Contact
+                          </NavDropdown.Item>
                         </LinkContainer>
                         <NavDropdown.Divider />
                         <Link
@@ -131,6 +177,13 @@ function App() {
                           to="#signout"
                           onClick={signoutHandler}
                         >
+                          <img
+                            src="images\logout.png"
+                            alt="Icon"
+                            className="icon"
+                            width="20"
+                            height="20"
+                          />
                           Deconecteaza-te
                         </Link>
                       </NavDropdown>
@@ -142,7 +195,16 @@ function App() {
                     {userInfo && userInfo.isAdmin && (
                       <NavDropdown title="Admin" id="admin-nav-dropdown">
                         <LinkContainer to="/admin/dashboard">
-                          <NavDropdown.Item>Statistici</NavDropdown.Item>
+                          <NavDropdown.Item>
+                            <img
+                              src="images\statistics.png"
+                              alt="Icon"
+                              className="icon"
+                              width="20"
+                              height="20"
+                            />
+                            Statistici
+                          </NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/admin/products">
                           <NavDropdown.Item>Produse</NavDropdown.Item>

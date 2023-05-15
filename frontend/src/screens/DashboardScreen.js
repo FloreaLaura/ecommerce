@@ -52,7 +52,7 @@ export default function DashboardScreen() {
 
   return (
     <div>
-      <h1>Statistici</h1>
+      <h2>Statistici</h2>
       {loading ? (
         <LoadingBox />
       ) : error ? (
@@ -68,7 +68,7 @@ export default function DashboardScreen() {
                       ? summary.users[0].numUsers
                       : 0}
                   </Card.Title>
-                  <Card.Text> Utilizatori</Card.Text>
+                  <Card.Text>Utilizatori</Card.Text>
                 </Card.Body>
               </Card>
             </Col>

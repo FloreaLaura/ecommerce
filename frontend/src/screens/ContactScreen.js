@@ -1,7 +1,17 @@
 export default function ContactScreen() {
   return (
     <div>
-      <h2>Contact</h2>
+      <h2>
+        {' '}
+        <img
+          src="images\contact.png"
+          alt="Icon"
+          className="icon"
+          width="30"
+          height="30"
+        />
+        Contact
+      </h2>
       <p>Telefon: 0723456789</p>
       <p>
         Adresa: Strada Naurii, nr. 1, Sector 3, Bucuresti (La aceasta adresa nu
