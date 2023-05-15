@@ -36,37 +36,41 @@ const reducer = (state, action) => {
 
 const prices = [
   {
-    name: '$1 to $50',
-    value: '1-50',
+    name: '1 - 100',
+    value: '1-100',
   },
   {
-    name: '$51 to $200',
-    value: '51-200',
+    name: '100 - 200',
+    value: '100-200',
   },
   {
-    name: '$201 to $1000',
-    value: '201-1000',
+    name: '>200',
+    value: '200-1000',
   },
 ];
 
 export const ratings = [
   {
-    name: '4stars & up',
+    name: '5stars',
+    rating: 5,
+  },
+  {
+    name: '4stars',
     rating: 4,
   },
 
   {
-    name: '3stars & up',
+    name: '3stars',
     rating: 3,
   },
 
   {
-    name: '2stars & up',
+    name: '2stars',
     rating: 2,
   },
 
   {
-    name: '1stars & up',
+    name: '1stars',
     rating: 1,
   },
 ];
@@ -183,7 +187,7 @@ export default function SearchScreen() {
             </ul>
           </div>
           <div>
-            <h3>Reviews</h3>
+            <h3>Recenzii</h3>
             <ul>
               {ratings.map((r) => (
                 <li key={r.name}>
@@ -191,7 +195,7 @@ export default function SearchScreen() {
                     to={getFilterUrl({ rating: r.rating })}
                     className={`${r.rating}` === `${rating}` ? 'text-bold' : ''}
                   >
-                    <Rating caption={' & up'} rating={r.rating}></Rating>
+                    <Rating caption={'stele '} rating={r.rating}></Rating>
                   </Link>
                 </li>
               ))}
@@ -200,7 +204,7 @@ export default function SearchScreen() {
                   to={getFilterUrl({ rating: 'all' })}
                   className={rating === 'all' ? 'text-bold' : ''}
                 >
-                  <Rating caption={' & up'} rating={0}></Rating>
+                  <Rating caption={' stele '} rating={0}></Rating>
                 </Link>
               </li>
             </ul>
@@ -216,7 +220,7 @@ export default function SearchScreen() {
               <Row className="justify-content-between mb-3">
                 <Col md={6}>
                   <div>
-                    {countProducts === 0 ? 'No' : countProducts} Results
+                    {countProducts === 0 ? 'No' : countProducts} Rezultate
                     {query !== 'all' && ' : ' + query}
                     {category !== 'all' && ' : ' + category}
                     {price !== 'all' && ' : Price ' + price}
@@ -250,7 +254,7 @@ export default function SearchScreen() {
                 </Col>
               </Row>
               {products.length === 0 && (
-                <MessageBox>No Product Found</MessageBox>
+                <MessageBox>Nu au fost gasite produse</MessageBox>
               )}
 
               <Row>

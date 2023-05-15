@@ -103,7 +103,7 @@ function ProductScreen() {
       dispatch({
         type: 'CREATE_SUCCESS',
       });
-      toast.success('Review submitted successfully');
+      toast.success('Recenzia a fost adăugată cu succes');
       product.reviews.unshift(data.review);
       product.numReviews = data.numReviews;
       product.rating = data.rating;
@@ -181,8 +181,8 @@ function ProductScreen() {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <Row>
-                    <Col>Price:</Col>
-                    <Col>${product.price}</Col>
+                    <Col>Pret:</Col>
+                    <Col>{product.price} RON</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
@@ -190,9 +190,9 @@ function ProductScreen() {
                     <Col>Status:</Col>
                     <Col>
                       {product.countInStock > 0 ? (
-                        <Badge bg="success">In Stock</Badge>
+                        <Badge bg="success">In Stoc</Badge>
                       ) : (
-                        <Badge bg="danger">Unavailable</Badge>
+                        <Badge bg="danger">Indisponibil</Badge>
                       )}
                     </Col>
                   </Row>
@@ -213,10 +213,10 @@ function ProductScreen() {
         </Col>
       </Row>
       <div className="my-3">
-        <h2 ref={reviewsRef}>Reviews</h2>
+        <h2 ref={reviewsRef}>Recenzii</h2>
         <div className="mb-3">
           {product.reviews.length === 0 && (
-            <MessageBox>There is no review</MessageBox>
+            <MessageBox>Nu sunt recenzii</MessageBox>
           )}
         </div>
         <ListGroup>
@@ -232,7 +232,7 @@ function ProductScreen() {
         <div className="my-3">
           {userInfo ? (
             <form onSubmit={submitHandler}>
-              <h2>Write a customer review</h2>
+              <h2>Adauga o recenzie</h2>
               <Form.Group className="mb-3" controlId="rating">
                 <Form.Label>Rating</Form.Label>
                 <Form.Select
@@ -240,17 +240,17 @@ function ProductScreen() {
                   value={rating}
                   onChange={(e) => setRating(e.target.value)}
                 >
-                  <option value="">Select...</option>
-                  <option value="1">1- Poor</option>
-                  <option value="2">2- Fair</option>
-                  <option value="3">3- Good</option>
-                  <option value="4">4- Very good</option>
+                  <option value="">Alege...</option>
+                  <option value="1">1- Foarte Slab</option>
+                  <option value="2">2- Slab</option>
+                  <option value="3">3- Bun</option>
+                  <option value="4">4- Foarte bun</option>
                   <option value="5">5- Excelent</option>
                 </Form.Select>
               </Form.Group>
               <FloatingLabel
                 controlId="floatingTextarea"
-                label="Comments"
+                label="Comentariu"
                 className="mb-3"
               >
                 <Form.Control
@@ -263,18 +263,18 @@ function ProductScreen() {
 
               <div className="mb-3">
                 <Button disabled={loadingCreateReview} type="submit">
-                  Submit
+                  Adauga
                 </Button>
                 {loadingCreateReview && <LoadingBox></LoadingBox>}
               </div>
             </form>
           ) : (
             <MessageBox>
-              Please{' '}
+              Te rog{' '}
               <Link to={`/signin?redirect=/product/${product.slug}`}>
-                Sign In
+                Conecteaza-te
               </Link>{' '}
-              to write a review
+              pentru a adauga o recenzie
             </MessageBox>
           )}
         </div>

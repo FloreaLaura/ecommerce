@@ -95,8 +95,8 @@ export default function MapScreen() {
     });
     toast.success('location selected successfully.');
     navigate('/shipping');
+    console.log('adresa estE', location);
   };
-
   return (
     <div className="full-box">
       <LoadScript libraries={libs} googleMapsApiKey={googleApiKey}>
@@ -113,8 +113,12 @@ export default function MapScreen() {
             onPlacesChanged={onPlacesChanged}
           >
             <div className="map-input-box">
-              <input type="text" placeholder="Enter your address"></input>
-              <Button type="button" onClick={onConfirm}>
+              <input type="text" placeholder="Alegeti adresa dorita"></input>
+              <Button
+                type="button"
+                className="btnConfirmAdress"
+                onClick={onConfirm}
+              >
                 Confirm
               </Button>
             </div>

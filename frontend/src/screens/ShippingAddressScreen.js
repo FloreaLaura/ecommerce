@@ -117,8 +117,8 @@ export default function ShippingAddressScreen() {
               Alege locatia pe harta
             </Button>
             {shippingAddress.location && shippingAddress.location.lat ? (
-              <div>
-                Latitudine: {shippingAddress.location.lat}
+              <div style={{ display: 'block' }}>
+                Latitudine: {shippingAddress.location.lat} <br />
                 Longitudine:{shippingAddress.location.lng}
               </div>
             ) : (
