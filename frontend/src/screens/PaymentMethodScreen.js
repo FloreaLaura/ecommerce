@@ -14,7 +14,7 @@ export default function PaymentMethodScreen() {
   } = state;
 
   const [paymentMethodName, setPaymentMethod] = useState(
-    paymentMethod || 'PayPal'
+    paymentMethod || 'Online'
   );
 
   useEffect(() => {
@@ -33,17 +33,17 @@ export default function PaymentMethodScreen() {
       <CheckoutSteps step1 step2 step3></CheckoutSteps>
       <div className="container small-container">
         <Helmet>
-          <title>Payment Method</title>
+          <title>Metoda de plata</title>
         </Helmet>
-        <h1 className="my-3">Payment Method</h1>
+        <h1 className="my-3">Metoda de plata</h1>
         <Form onSubmit={submitHandler}>
           <div className="mb-3">
             <Form.Check
               type="radio"
-              id="PayPal"
-              label="PayPal"
-              value="PayPal"
-              checked={paymentMethodName === 'PayPal'}
+              id="Online"
+              label="Online"
+              value="Online"
+              checked={paymentMethodName === 'Online'}
               onChange={(e) => setPaymentMethod(e.target.value)}
             />
           </div>

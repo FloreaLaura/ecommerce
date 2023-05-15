@@ -43,16 +43,14 @@ const reducer = (state, action) => {
 };
 export default function ProductCreateScreen() {
   const navigate = useNavigate();
-  const params = useParams(); // /product/:id
-  const { id: productId } = params;
+  const params = useParams();
 
   const { state } = useContext(Store);
   const { userInfo } = state;
-  const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: '',
-    });
+  const [{ loadingUpdate, loadingUpload }, dispatch] = useReducer(reducer, {
+    loading: true,
+    error: '',
+  });
 
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
@@ -65,45 +63,6 @@ export default function ProductCreateScreen() {
   const [description, setDescription] = useState('');
   const rating = 0;
   const numReviews = 0;
-
-  //   const createProduct = async (productData) => {
-  //     try {
-  //       const response = await axios.post('/api/products/create', productData, {
-  //         headers: {
-  //           'Content-Type': 'multipart/form-data',
-  //           Authorization: `Bearer ${userInfo.token}`,
-  //         },
-  //       });
-  //       return response.data;
-  //     } catch (error) {
-  //       console.log(error);
-  //       return { error: error.response.data.message || error.message };
-  //     }
-  //   };
-
-  //   const createHandler = async (e) => {
-  //     e.preventDefault();
-  //     try {
-  //       dispatch({ type: 'FETCH_REQUEST' });
-  //       const data = new FormData();
-  //       data.append('name', name);
-  //       data.append('slug', slug);
-  //       data.append('price', price);
-  //       data.append('image', image);
-  //       data.append('images', images);
-  //       data.append('category', category);
-  //       data.append('countInStock', countInStock);
-  //       data.append('brand', brand);
-  //       data.append('description', description);
-  //       const result = await createProduct(data);
-  //       dispatch({ type: 'FETCH_SUCCESS' });
-  //       toast.success(result.message);
-  //       navigate('/admin/products');
-  //     } catch (err) {
-  //       dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
-  //       toast.error(getError(err));
-  //     }
-  //   };
 
   const createHandler = async (e) => {
     e.preventDefault();
@@ -124,43 +83,9 @@ export default function ProductCreateScreen() {
       });
       navigate(`/admin/products`);
     } catch (err) {
-      toast.error(getError(err));
+      toast.error('Completati corect toate campurile!');
     }
   };
-
-  //   const createHandler = async () => {
-  //     console.log('name: ', name, slug, price);
-  //     if (window.confirm('Are you sure to create?')) {
-  //       try {
-  //         dispatch({ type: 'CREATE_REQUEST' });
-  //         const { data } = await axios.post(
-  //           '/api/products/create',
-  //           {
-  //             name,
-  //             slug,
-  //             price,
-  //             image,
-  //             images,
-  //             category,
-  //             countInStock,
-  //             brand,
-  //             description,
-  //           },
-  //           {
-  //             headers: { Authorization: `Bearer ${userInfo.token}` },
-  //           }
-  //         );
-  //         toast.success('product created successfully');
-  //         dispatch({ type: 'CREATE_SUCCESS' });
-  //         navigate(`/admin/products`);
-  //       } catch (err) {
-  //         toast.error(getError(error));
-  //         dispatch({
-  //           type: 'CREATE_FAIL',
-  //         });
-  //       }
-  //     }
-  //   };
 
   const uploadFileHandler = async (e, forImages) => {
     const file = e.target.files[0];
@@ -181,7 +106,7 @@ export default function ProductCreateScreen() {
       } else {
         setImage(data.secure_url);
       }
-      toast.success('Image uploaded successfully. click Update to apply it');
+      toast.success('Imaginea a fost adaugata cu succes.');
     } catch (err) {
       toast.error(getError(err));
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
@@ -192,22 +117,24 @@ export default function ProductCreateScreen() {
     console.log(images);
     console.log(images.filter((x) => x !== fileName));
     setImages(images.filter((x) => x !== fileName));
-    toast.success('Image removed successfully. click Update to apply it');
+    toast.success('Imaginea a fost eliminata cu succes.');
   };
   return (
     <Container className="small-container">
       <Form>
         <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>Denumire</Form.Label>
           <Form.Control
             value={name}
-            onChange={(e) => setName(e.target.value)}
             required
+            onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="slug">
-          <Form.Label>Slug</Form.Label>
+          <Form.Label>
+            ID produs (acesta are formatul de tipul: denumire-produs)
+          </Form.Label>
           <Form.Control
             value={slug}
             onChange={(e) => setSlug(e.target.value)}
@@ -216,7 +143,7 @@ export default function ProductCreateScreen() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Price</Form.Label>
+          <Form.Label>Pret</Form.Label>
           <Form.Control
             value={price}
             onChange={(e) => setPrice(e.target.value)}
@@ -224,7 +151,7 @@ export default function ProductCreateScreen() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="image">
-          <Form.Label>Image File</Form.Label>
+          <Form.Label>Fisierul imaginii</Form.Label>
           <Form.Control
             value={image}
             onChange={(e) => setImage(e.target.value)}
@@ -232,14 +159,14 @@ export default function ProductCreateScreen() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="imageFile">
-          <Form.Label>Upload Image</Form.Label>
+          <Form.Label>Incarca imagine</Form.Label>
           <Form.Control type="file" onChange={uploadFileHandler} />
           {loadingUpload && <LoadingBox></LoadingBox>}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="additionalImage">
-          <Form.Label>Additional Images</Form.Label>
-          {images.length === 0 && <MessageBox>No image</MessageBox>}
+          <Form.Label>Fisierul Imagine suplimentara</Form.Label>
+          {images.length === 0 && <MessageBox>Nicio imagine</MessageBox>}
           <ListGroup variant="flush">
             {images.map((x) => (
               <ListGroup.Item key={x}>
@@ -252,7 +179,7 @@ export default function ProductCreateScreen() {
           </ListGroup>
         </Form.Group>
         <Form.Group className="mb-3" controlId="additionalImageFile">
-          <Form.Label>Upload Aditional Image</Form.Label>
+          <Form.Label>Incarca imaginea suplimentara</Form.Label>
           <Form.Control
             type="file"
             onChange={(e) => uploadFileHandler(e, true)}
@@ -277,15 +204,24 @@ export default function ProductCreateScreen() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="brand">
-          <Form.Label>Brand</Form.Label>
+          <Form.Label>Producator</Form.Label>
           <Form.Control
+            as="select"
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
             required
-          />
+          >
+            <option value="">Selectați producatorul</option>
+            <option value="DACIA PLANT">DACIA PLANT</option>
+            <option value="YOGI TEA">YOGI TEA</option>
+            <option value="Sonnentor">Sonnentor</option>
+            <option value="Arom Science">Arom Science</option>
+            <option value="Parapharm">Parapharm</option>
+            <option value="PlantExtrakt">PlantExtrakt</option>
+          </Form.Control>
         </Form.Group>
         <Form.Group className="mb-3" controlId="countInStock">
-          <Form.Label>Count In Stock</Form.Label>
+          <Form.Label>Produse in stoc</Form.Label>
           <Form.Control
             value={countInStock}
             onChange={(e) => setCountInStock(e.target.value)}
@@ -293,7 +229,7 @@ export default function ProductCreateScreen() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
-          <Form.Label>Description</Form.Label>
+          <Form.Label>Descriere</Form.Label>
           <Form.Control
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -306,7 +242,7 @@ export default function ProductCreateScreen() {
             type="submit"
             onClick={createHandler}
           >
-            Update
+            Adauga
           </Button>
           {loadingUpdate && <LoadingBox></LoadingBox>}
         </div>

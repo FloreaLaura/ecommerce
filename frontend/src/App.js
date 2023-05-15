@@ -24,21 +24,20 @@ import Button from 'react-bootstrap/Button';
 import { getError } from './utils';
 import axios from 'axios';
 import SearchBox from './components/SearchBox';
-import ChatBox from './components/ChatBox';
 import SearchScreen from './screens/SearchScreen';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardScreen from './screens/DashboardScreen';
-import SupportScreen from './screens/SupportScreen';
 import AdminRoute from './components/AdminRoute';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
-import MapScreen from './screens/MapScreen';
 import ForgetPasswordScreen from './screens/ForgetPasswordScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
 import ProductCreateScreen from './screens/ProductCreateScreen';
+import ContactScreen from './screens/ContactScreen';
+import MapScreen from './screens/MapScreen';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -116,12 +115,15 @@ function App() {
                         id="basic-nav-dropdown"
                       >
                         <LinkContainer to="/profile">
-                          <NavDropdown.Item>User Profile</NavDropdown.Item>
+                          <NavDropdown.Item>Profil</NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/orderhistory">
                           <NavDropdown.Item>
-                            Istoric de cumparaturi
+                            Istoric cumparaturi
                           </NavDropdown.Item>
+                        </LinkContainer>
+                        <LinkContainer to="/contact">
+                          <NavDropdown.Item>Contact</NavDropdown.Item>
                         </LinkContainer>
                         <NavDropdown.Divider />
                         <Link
@@ -129,30 +131,27 @@ function App() {
                           to="#signout"
                           onClick={signoutHandler}
                         >
-                          Sign Out
+                          Deconecteaza-te
                         </Link>
                       </NavDropdown>
                     ) : (
                       <Link className="nav-link" to="/signin">
-                        Sign In
+                        Conecteaza-te
                       </Link>
                     )}
                     {userInfo && userInfo.isAdmin && (
                       <NavDropdown title="Admin" id="admin-nav-dropdown">
                         <LinkContainer to="/admin/dashboard">
-                          <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                          <NavDropdown.Item>Statistici</NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/admin/products">
-                          <NavDropdown.Item>Products</NavDropdown.Item>
+                          <NavDropdown.Item>Produse</NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/admin/orders">
-                          <NavDropdown.Item>Orders</NavDropdown.Item>
+                          <NavDropdown.Item>Comenzi</NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/admin/users">
-                          <NavDropdown.Item>Users</NavDropdown.Item>
-                        </LinkContainer>
-                        <LinkContainer to="/admin/support">
-                          <NavDropdown.Item> Support </NavDropdown.Item>
+                          <NavDropdown.Item>Utilizatori</NavDropdown.Item>
                         </LinkContainer>
                       </NavDropdown>
                     )}
@@ -196,7 +195,6 @@ function App() {
                   path="/create-product"
                   element={<ProductCreateScreen />}
                 />
-
                 <Route
                   path="/forget-password"
                   element={<ForgetPasswordScreen />}
@@ -205,7 +203,6 @@ function App() {
                   path="/reset-password/:token"
                   element={<ResetPasswordScreen />}
                 />
-
                 <Route
                   path="/profile"
                   element={
@@ -214,6 +211,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                :{' '}
                 <Route
                   path="/map"
                   element={
@@ -240,6 +238,14 @@ function App() {
                   }
                 ></Route>
                 <Route
+                  path="/contact"
+                  element={
+                    <ProtectedRoute>
+                      <ContactScreen />
+                    </ProtectedRoute>
+                  }
+                ></Route>
+                <Route
                   path="/shipping"
                   element={<ShippingAddressScreen />}
                 ></Route>
@@ -253,14 +259,6 @@ function App() {
                   element={
                     <AdminRoute>
                       <DashboardScreen />
-                    </AdminRoute>
-                  }
-                ></Route>
-                <Route
-                  path="/admin/support"
-                  element={
-                    <AdminRoute>
-                      <SupportScreen />
                     </AdminRoute>
                   }
                 ></Route>
@@ -304,14 +302,10 @@ function App() {
                     </AdminRoute>
                   }
                 ></Route>
-
                 <Route path="/" element={<HomeScreen />} />
               </Routes>
             </Container>
           </main>
-          <footer className="row center">
-            {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-          </footer>
         </div>
       </div>
     </BrowserRouter>

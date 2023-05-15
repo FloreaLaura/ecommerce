@@ -95,19 +95,13 @@ export default function ProductListScreen() {
     }
   }, [page, userInfo, successDelete]);
 
-  const createHandler = async () => {
-    if (window.confirm('Are you sure to create?')) {
-      <Link to="/create-product">Create Product</Link>;
-    }
-  };
-
   const deleteHandler = async (product) => {
-    if (window.confirm('Are you sure to delete?')) {
+    if (window.confirm('Esti sigur ca doresti sa stergi acest produs?')) {
       try {
         await axios.delete(`/api/products/${product._id}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        toast.success('product deleted successfully');
+        toast.success('Produsul a fost sters cu succes');
         dispatch({ type: 'DELETE_SUCCESS' });
       } catch (err) {
         toast.error(getError(error));
@@ -122,15 +116,14 @@ export default function ProductListScreen() {
     <div>
       <Row>
         <Col>
-          <h1>Products</h1>
+          <h1>Produse</h1>
         </Col>
         <Col className="col text-end">
           <div>
-            {/* <Button type="button" onClick={createHandler}>
-              Create Product
-            </Button> */}
             <Link to="/create-product">
-              <button type="button">Create Product</button>
+              <button className="btnAdauga" type="button">
+                Adauga produs
+              </button>
             </Link>
           </div>
         </Col>
@@ -148,12 +141,12 @@ export default function ProductListScreen() {
           <table className="table">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
-                <th>ACTIONS</th>
+                <th>COD PRODUS</th>
+                <th>DENUMIRE</th>
+                <th>PRET</th>
+                <th>CATEGORIE</th>
+                <th>PRODUCATOR</th>
+                <th>ACTIUNI</th>
               </tr>
             </thead>
             <tbody>
@@ -161,7 +154,7 @@ export default function ProductListScreen() {
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
-                  <td>{product.price}</td>
+                  <td>{product.price} RON</td>
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
                   <td>
@@ -170,7 +163,7 @@ export default function ProductListScreen() {
                       variant="light"
                       onClick={() => navigate(`/admin/product/${product._id}`)}
                     >
-                      Edit
+                      Editeaza
                     </Button>
                     &nbsp;
                     <Button
@@ -178,7 +171,7 @@ export default function ProductListScreen() {
                       variant="light"
                       onClick={() => deleteHandler(product)}
                     >
-                      Delete
+                      Sterge
                     </Button>
                   </td>
                 </tr>

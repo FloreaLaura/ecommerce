@@ -76,11 +76,11 @@ userRouter.post(
         .messages()
         .send(
           {
-            from: 'Amazona <me@mg.yourdomain.com>',
+            from: 'Naturshop <service@mail.naturshop.com>',
             to: `${user.name} <${user.email}>`,
-            subject: `Reset Password`,
+            subject: `Reseteaza parola`,
             html: ` 
-             <p>Please Click the following link to reset your password:</p> 
+             <p>Dați click pe următorul link pentru a vă reseta parola:</p> 
              <a href="${baseUrl()}/reset-password/${token}"}>Reset Password</a>
              `,
           },
