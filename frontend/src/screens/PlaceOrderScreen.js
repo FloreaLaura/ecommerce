@@ -41,7 +41,8 @@ export default function PlaceOrderScreen() {
     cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
   cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
-  cart.taxPrice = round2(0.15 * cart.itemsPrice);
+  cart.taxPrice =
+    cart.itemsPrice > 100 ? round2(0) : round2(0.1 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
   const placeOrderHandler = async () => {
@@ -73,6 +74,12 @@ export default function PlaceOrderScreen() {
       dispatch({ type: 'CREATE_FAIL' });
       toast.error(getError(err));
     }
+  };
+
+  const cancelOrderHandler = async () => {
+    cart.cartItems = [];
+    ctxDispatch({ type: 'CART_REMOVE_ITEM' });
+    navigate('/');
   };
 
   useEffect(() => {
@@ -181,6 +188,14 @@ export default function PlaceOrderScreen() {
                       disabled={cart.cartItems.length === 0}
                     >
                       Plaseaza comanda
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={cancelOrderHandler}
+                      disabled={cart.cartItems.length === 0}
+                      className="mt-3"
+                    >
+                      Anuleaza comanda
                     </Button>
                   </div>
                   {loading && <LoadingBox></LoadingBox>}
