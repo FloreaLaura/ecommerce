@@ -112,6 +112,14 @@ export default function DashboardScreen() {
                   ['Data', 'Vanzari'],
                   ...summary.dailyOrders.map((x) => [x._id, x.sales]),
                 ]}
+                options={{
+                  vAxis: {
+                    title: 'Vanzari (RON)',
+                  },
+                  hAxis: {
+                    title: 'DATA',
+                  },
+                }}
               ></Chart>
             )}
           </div>
