@@ -130,6 +130,16 @@ function App() {
                         </Badge>
                       )}
                     </Link>
+                    <Link to="/contact" className="nav-link">
+                      <img
+                        src="images\contact.png"
+                        alt="Icon"
+                        className="icon"
+                        width="20"
+                        height="20"
+                      />
+                      Contact
+                    </Link>
                     {userInfo ? (
                       <NavDropdown
                         title={userInfo.name}
@@ -157,18 +167,6 @@ function App() {
                               height="20"
                             />
                             Istoric cumparaturi
-                          </NavDropdown.Item>
-                        </LinkContainer>
-                        <LinkContainer to="/contact">
-                          <NavDropdown.Item>
-                            <img
-                              src="images\contact.png"
-                              alt="Icon"
-                              className="icon"
-                              width="20"
-                              height="20"
-                            />
-                            Contact
                           </NavDropdown.Item>
                         </LinkContainer>
                         <NavDropdown.Divider />
@@ -253,6 +251,7 @@ function App() {
                 <Route path="/search" element={<SearchScreen />} />
                 <Route path="/signin" element={<SigninScreen />} />
                 <Route path="/signup" element={<SignupScreen />} />
+                <Route path="/contact" element={<ContactScreen />}></Route>
                 <Route
                   path="/create-product"
                   element={<ProductCreateScreen />}
@@ -296,14 +295,6 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <OrderHistoryScreen />
-                    </ProtectedRoute>
-                  }
-                ></Route>
-                <Route
-                  path="/contact"
-                  element={
-                    <ProtectedRoute>
-                      <ContactScreen />
                     </ProtectedRoute>
                   }
                 ></Route>
