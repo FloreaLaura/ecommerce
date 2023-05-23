@@ -14,7 +14,7 @@ export default function ContactScreen() {
       </h2>
       <p>Telefon: 0723456789</p>
       <p>
-        Adresa: Strada Naurii, nr. 1, Sector 3, Bucuresti (La aceasta adresa nu
+        Adresa: Strada Naturii, nr. 1, Sector 3, Bucuresti (La aceasta adresa nu
         se lucreaza cu publicul!, efectuam doar comenzi online)
       </p>
       <p>Email: contact@naturshop.ro</p>
