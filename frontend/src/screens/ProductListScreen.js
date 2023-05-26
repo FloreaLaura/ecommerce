@@ -83,7 +83,6 @@ export default function ProductListScreen() {
         const { data } = await axios.get(`/api/products/admin?page=${page} `, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {}
     };
@@ -98,13 +97,38 @@ export default function ProductListScreen() {
   const deleteHandler = async (product) => {
     if (window.confirm('Esti sigur ca doresti sa stergi acest produs?')) {
       try {
-        await axios.delete(`/api/products/${product._id}`, {
+        const { data } = await axios.get('/api/orders', {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        toast.success('Produsul a fost sters cu succes');
-        dispatch({ type: 'DELETE_SUCCESS' });
+
+        const undeliveredOrdersData = data.filter(
+          (order) =>
+            !order.isDelivered &&
+            order.orderItems.some(
+              (orderItem) => orderItem.product === product._id
+            )
+        );
+
+        console.log('undeliveredOrdersData:', undeliveredOrdersData);
+
+        const hasUndeliveredOrder = undeliveredOrdersData.length > 0;
+
+        console.log('hasUndeliveredOrder:', hasUndeliveredOrder);
+
+        if (hasUndeliveredOrder) {
+          toast.error(
+            'Produsul nu poate fi sters deoarece este asociat unei comenzi active.'
+          );
+        } else {
+          await axios.delete(`/api/products/${product._id}`, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          });
+          toast.success('Produsul a fost sters cu succes');
+          dispatch({ type: 'DELETE_SUCCESS' });
+        }
       } catch (err) {
-        toast.error(getError(error));
+        console.log('Error:', err);
+        toast.error(getError(err));
         dispatch({
           type: 'DELETE_FAIL',
         });
