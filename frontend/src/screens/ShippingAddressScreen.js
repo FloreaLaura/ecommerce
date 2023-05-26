@@ -125,6 +125,8 @@ export default function ShippingAddressScreen() {
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
               required
+              pattern="\d{6}"
+              title="Codul postal trebuie să conțină exact 6 cifre."
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="country">
@@ -146,12 +148,13 @@ export default function ShippingAddressScreen() {
               Alege locatia pe harta
             </Button>
             {shippingAddress.location && shippingAddress.location.lat ? (
-              <div style={{ display: 'block' }}>
-                Latitudine: {shippingAddress.location.lat} <br />
-                Longitudine:{shippingAddress.location.lng}
+              <div style={{ display: 'block', fontWeight: 'bold' }}>
+                {/* Latitudine: {shippingAddress.location.lat} <br />
+                Longitudine:{shippingAddress.location.lng} */}
+                <br /> Locatie adaugata
               </div>
             ) : (
-              <div>Fara locatie</div>
+              <div style={{ marginTop: '20px' }}>Fara locatie</div>
             )}
           </div>
 

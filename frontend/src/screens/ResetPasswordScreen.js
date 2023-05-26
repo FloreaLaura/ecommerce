@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Store } from '../Store';
 import { getError } from '../utils';
+import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 
 export default function ResetPasswordScreen() {
   const navigate = useNavigate();
@@ -43,6 +44,17 @@ export default function ResetPasswordScreen() {
     }
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handlePasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleConfirmPasswordToggle = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
   return (
     <Container className="small-container">
       <Helmet>
@@ -52,19 +64,33 @@ export default function ResetPasswordScreen() {
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="password">
           <Form.Label>Parola noua</Form.Label>
-          <Form.Control
-            type="password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="password-input">
+            <Form.Control
+              type={showPassword ? 'text' : 'password'}
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span className="password-toggle" onClick={handlePasswordToggle}>
+              {showPassword ? <EyeSlashFill /> : <EyeFill />}
+            </span>
+          </div>
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="confirmPassword">
           <Form.Label>Confirma parola noua</Form.Label>
-          <Form.Control
-            type="password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
+          <div className="password-input">
+            <Form.Control
+              type={showConfirmPassword ? 'text' : 'password'}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+            <span
+              className="password-toggle"
+              onClick={handleConfirmPasswordToggle}
+            >
+              {showConfirmPassword ? <EyeSlashFill /> : <EyeFill />}
+            </span>
+          </div>
         </Form.Group>
 
         <div className="mb-3">

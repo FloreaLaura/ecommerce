@@ -8,6 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Store } from '../Store';
 import { toast } from 'react-toastify';
 import { getError } from '../utils';
+import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 
 export default function SigninScreen() {
   const navigate = useNavigate();
@@ -35,6 +36,12 @@ export default function SigninScreen() {
     }
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handlePasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
+
   useEffect(() => {
     if (userInfo) {
       navigate(redirect);
@@ -58,21 +65,27 @@ export default function SigninScreen() {
         </Form.Group>
         <Form.Group className="mb-3" controlId="password">
           <Form.Label>Parola</Form.Label>
-          <Form.Control
-            type="password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="password-input">
+            <Form.Control
+              type={showPassword ? 'text' : 'password'}
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span className="password-toggle" onClick={handlePasswordToggle}>
+              {showPassword ? <EyeSlashFill /> : <EyeFill />}
+            </span>
+          </div>
         </Form.Group>
         <div className="mb-3">
           <Button type="submit">Logheaza-te</Button>
         </div>
         <div className="mb-3">
           Client nou?{' '}
-          <Link to={`/signup?redirect=${redirect}`}>Creaza cont</Link>
+          <Link to={`/signup?redirect=${redirect}`}>Creeaza cont</Link>
         </div>
         <div className="mb-3">
-          Ai uitat parola? <Link to={`/forget-password`}>Reseteaza Parola</Link>
+          Ai uitat parola? <Link to={`/forget-password`}>Reseteaza parola</Link>
         </div>
       </Form>
     </Container>

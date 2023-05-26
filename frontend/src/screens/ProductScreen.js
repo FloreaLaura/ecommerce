@@ -138,9 +138,9 @@ function ProductScreen() {
                 <title>{product.name}</title>
               </Helmet>
               <h1>{product.name}</h1>
-            </ListGroup.Item>
+              {/* </ListGroup.Item>
             <ListGroup.Item>Pret: {product.price} RON</ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item> */}
               <Rating
                 rating={product.rating}
                 numReviews={product.numReviews}
@@ -263,7 +263,7 @@ function ProductScreen() {
 
               <div className="mb-3">
                 <Button disabled={loadingCreateReview} type="submit">
-                  Adauga
+                  Adauga recenzie
                 </Button>
                 {loadingCreateReview && <LoadingBox></LoadingBox>}
               </div>

@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Button from 'react-bootstrap/Button';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -132,14 +133,19 @@ export default function ProductCreateScreen() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="slug">
-          <Form.Label>
-            ID produs (acesta are formatul de tipul: denumire-produs)
-          </Form.Label>
-          <Form.Control
-            value={slug}
-            onChange={(e) => setSlug(e.target.value)}
-            required
-          />
+          <Form.Label>ID produs</Form.Label>
+          <FloatingLabel
+            controlId="floatingTextarea"
+            label="Formatul ID-ului este de tipul: denumire-produs"
+            className="mb-3"
+          >
+            <Form.Control
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
+              pattern=".*-.*"
+              required
+            />
+          </FloatingLabel>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="name">

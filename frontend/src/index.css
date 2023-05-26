@@ -95,7 +95,8 @@ main {
   padding: 1rem;
 }
 .img-large {
-  max-width: 100%;
+  max-width: 350px;
+  max-height: 500px;
 }
 .img-thumbnail {
   height: 80px;
@@ -202,4 +203,17 @@ button.thumbnail {
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
+}
+
+.password-input {
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.custom-form-group {
+  margin-top: 20px;
 }
