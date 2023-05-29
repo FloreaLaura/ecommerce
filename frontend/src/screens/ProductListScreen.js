@@ -171,13 +171,13 @@ export default function ProductListScreen() {
         <>
           <table className="table">
             <thead>
-              <tr>
-                <th>COD PRODUS</th>
-                <th>DENUMIRE</th>
-                <th>PRET</th>
-                <th>CATEGORIE</th>
-                <th>PRODUCATOR</th>
-                <th>ACTIUNI</th>
+              <tr className="table-header-row">
+                <th className="table-header">COD PRODUS</th>
+                <th className="table-header">DENUMIRE</th>
+                <th className="table-header">PRET</th>
+                <th className="table-header">CATEGORIE</th>
+                <th className="table-header">PRODUCATOR</th>
+                <th className="table-header">ACTIUNI</th>
               </tr>
             </thead>
             <tbody>

@@ -177,9 +177,26 @@ function ProductScreen() {
                 ))}
               </Row>
             </ListGroup.Item>
-            <ListGroup.Item className="listGroupDescription">
-              <p className="description"> Descriere: </p>
-              <p className="descriptionText">{product.description}</p>
+            <ListGroup.Item
+              className="listGroupDescription"
+              style={{
+                border: '1px solid grey',
+                padding: '10px',
+                borderRadius: '8px',
+              }}
+            >
+              <p
+                className="description"
+                style={{ color: 'black', fontSize: '18px', fontWeight: 'bold' }}
+              >
+                Descriere:
+              </p>
+              <p
+                className="descriptionText"
+                style={{ color: 'black', fontSize: '14px' }}
+              >
+                {product.description}
+              </p>
             </ListGroup.Item>
           </ListGroup>
         </Col>

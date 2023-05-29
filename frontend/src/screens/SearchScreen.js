@@ -152,7 +152,9 @@ export default function SearchScreen() {
             <ul>
               <li>
                 <Link
-                  className={'all' === category ? 'text-bold' : ''}
+                  className={`nav-link ${
+                    'all' === category ? 'text-bold' : ''
+                  }`}
                   to={getFilterUrl({ category: 'all' })}
                 >
                   Toate
@@ -161,7 +163,7 @@ export default function SearchScreen() {
               {categories.map((c) => (
                 <li key={c}>
                   <Link
-                    className={c === category ? 'text-bold' : ''}
+                    className={`nav-link ${c === category ? 'text-bold' : ''}`}
                     to={getFilterUrl({ category: c })}
                   >
                     {c}
@@ -182,7 +184,7 @@ export default function SearchScreen() {
             <ul>
               <li>
                 <Link
-                  className={'all' === price ? 'text-bold' : ''}
+                  className={`nav-link ${'all' === price ? 'text-bold' : ''}`}
                   to={getFilterUrl({ price: 'all' })}
                 >
                   Toate
@@ -192,7 +194,9 @@ export default function SearchScreen() {
                 <li key={p.value}>
                   <Link
                     to={getFilterUrl({ price: p.value })}
-                    className={p.value === price ? 'text-bold' : ''}
+                    className={`nav-link ${
+                      p.value === price ? 'text-bold' : ''
+                    }`}
                   >
                     {p.name}
                   </Link>
@@ -214,7 +218,9 @@ export default function SearchScreen() {
                 <li key={r.name}>
                   <Link
                     to={getFilterUrl({ rating: r.rating })}
-                    className={`${r.rating}` === `${rating}` ? 'text-bold' : ''}
+                    className={`nav-link ${
+                      r.rating === rating ? 'text-bold' : ''
+                    }`}
                   >
                     <Rating caption={'stele '} rating={r.rating}></Rating>
                   </Link>
@@ -223,7 +229,7 @@ export default function SearchScreen() {
               <li>
                 <Link
                   to={getFilterUrl({ rating: 'all' })}
-                  className={rating === 'all' ? 'text-bold' : ''}
+                  className={`nav-link ${rating === 'all' ? 'text-bold' : ''}`}
                 >
                   <Rating caption={' stele '} rating={0}></Rating>
                 </Link>
@@ -260,18 +266,22 @@ export default function SearchScreen() {
                   </div>
                 </Col>
                 <Col className="text-end">
-                  Sortati dupa{' '}
-                  <select
-                    value={order}
-                    onChange={(e) => {
-                      navigate(getFilterUrl({ order: e.target.value }));
-                    }}
-                  >
-                    <option value="newest">Cele mai noi</option>
-                    <option value="lowest">Pret crescator</option>
-                    <option value="highest">Pret descrescator</option>
-                    <option value="toprated">Recenzii</option>
-                  </select>
+                  <span className="sort-label">Sortati dupa: </span>
+                  <div className="sort-select-container">
+                    <select
+                      className="sort-select"
+                      value={order}
+                      onChange={(e) => {
+                        navigate(getFilterUrl({ order: e.target.value }));
+                      }}
+                    >
+                      <option value="newest">Cele mai noi</option>
+                      <option value="lowest">Pret crescator</option>
+                      <option value="highest">Pret descrescator</option>
+                      <option value="toprated">Recenzii</option>
+                    </select>
+                    <span className="sort-select-icon">&#9660;</span>
+                  </div>
                 </Col>
               </Row>
               {products.length === 0 && (
@@ -280,7 +290,7 @@ export default function SearchScreen() {
 
               <Row>
                 {products.map((product) => (
-                  <Col sm={6} lg={4} className="mb-3" key={product._id}>
+                  <Col sm={6} lg={3} className="mb-3" key={product._id}>
                     <Product product={product}></Product>
                   </Col>
                 ))}
