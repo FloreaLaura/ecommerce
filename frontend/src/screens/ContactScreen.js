@@ -1,7 +1,12 @@
 export default function ContactScreen() {
   return (
     <div>
-      <h2>
+      <h2
+        style={{
+          fontSize: '23px',
+          fontWeight: 'bold',
+        }}
+      >
         {' '}
         <img
           src="images\contact.png"

@@ -137,7 +137,14 @@ function ProductScreen() {
               <Helmet>
                 <title>{product.name}</title>
               </Helmet>
-              <h1>{product.name}</h1>
+              <h1
+                style={{
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                }}
+              >
+                {product.name}
+              </h1>
               {/* </ListGroup.Item>
             <ListGroup.Item>Pret: {product.price} RON</ListGroup.Item>
             <ListGroup.Item> */}
@@ -233,7 +240,14 @@ function ProductScreen() {
         <div className="my-3">
           {userInfo ? (
             <form onSubmit={submitHandler}>
-              <h2>Adauga o recenzie</h2>
+              <h2
+                style={{
+                  fontSize: '23px',
+                  fontWeight: 'bold',
+                }}
+              >
+                Adauga o recenzie
+              </h2>
               <Form.Group className="mb-3" controlId="rating">
                 <Form.Select
                   aria-label="Rating"

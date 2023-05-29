@@ -52,7 +52,14 @@ export default function DashboardScreen() {
 
   return (
     <div>
-      <h2>Statistici</h2>
+      <h2
+        style={{
+          fontSize: '23px',
+          fontWeight: 'bold',
+        }}
+      >
+        Statistici
+      </h2>
       {loading ? (
         <LoadingBox />
       ) : error ? (
@@ -99,7 +106,14 @@ export default function DashboardScreen() {
             </Col>
           </Row>
           <div className="my-3">
-            <h2>Vanzari</h2>
+            <h2
+              style={{
+                fontSize: '23px',
+                fontWeight: 'bold',
+              }}
+            >
+              Vanzari
+            </h2>
             {summary.dailyOrders.length === 0 ? (
               <MessageBox>Fara vanzari</MessageBox>
             ) : (
@@ -124,7 +138,14 @@ export default function DashboardScreen() {
             )}
           </div>
           <div className="my-3">
-            <h2>Categorii</h2>
+            <h2
+              style={{
+                fontSize: '23px',
+                fontWeight: 'bold',
+              }}
+            >
+              Categorii
+            </h2>
             {summary.productCategories.length === 0 ? (
               <MessageBox>Fara categorii</MessageBox>
             ) : (

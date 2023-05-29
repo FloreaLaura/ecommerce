@@ -65,7 +65,15 @@ export default function SignupScreen() {
       <Helmet>
         <title>Inregistreaza-te</title>
       </Helmet>
-      <h1 className="my-3">Inregistreaza-te</h1>
+      <h1
+        className="my-3"
+        style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Inregistreaza-te
+      </h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Nume</Form.Label>

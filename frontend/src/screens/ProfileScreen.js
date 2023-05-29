@@ -66,7 +66,15 @@ export default function ProfileScreen() {
       <Helmet>
         <title>Profil</title>
       </Helmet>
-      <h1 className="my-3">Profil</h1>
+      <h1
+        className="my-3"
+        style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Profil
+      </h1>
       <h5 className="person-title">
         <img
           src="images\person.png"

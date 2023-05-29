@@ -94,7 +94,14 @@ export default function UserEditScreen() {
       <Helmet>
         <title>Editeaza utilizatorul {userId}</title>
       </Helmet>
-      <h1>Editeaza utilizatorul {userId}</h1>
+      <h1
+        style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Editeaza utilizatorul {userId}
+      </h1>
 
       {loading ? (
         <LoadingBox></LoadingBox>

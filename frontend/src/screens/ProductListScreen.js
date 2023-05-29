@@ -140,7 +140,14 @@ export default function ProductListScreen() {
     <div>
       <Row>
         <Col>
-          <h1>Produse</h1>
+          <h1
+            style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+            }}
+          >
+            Produse
+          </h1>
         </Col>
         <Col className="col text-end">
           <div>

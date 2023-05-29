@@ -140,7 +140,14 @@ export default function SearchScreen() {
       </Helmet>
       <Row>
         <Col md={3}>
-          <h3>Categorie</h3>
+          <h3
+            style={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+            }}
+          >
+            Categorie
+          </h3>
           <div>
             <ul>
               <li>
@@ -164,7 +171,14 @@ export default function SearchScreen() {
             </ul>
           </div>
           <div>
-            <h3>Pret</h3>
+            <h3
+              style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+              }}
+            >
+              Pret
+            </h3>
             <ul>
               <li>
                 <Link
@@ -187,7 +201,14 @@ export default function SearchScreen() {
             </ul>
           </div>
           <div>
-            <h3>Recenzii</h3>
+            <h3
+              style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+              }}
+            >
+              Recenzii
+            </h3>
             <ul>
               {ratings.map((r) => (
                 <li key={r.name}>

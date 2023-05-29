@@ -159,7 +159,14 @@ export default function ProductEditScreen() {
       <Helmet>
         <title>Editeaza Produsul</title>
       </Helmet>
-      <h1>Editeaza produsul</h1>
+      <h1
+        style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Editeaza produsul
+      </h1>
 
       {loading ? (
         <LoadingBox></LoadingBox>

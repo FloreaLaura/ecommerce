@@ -35,7 +35,15 @@ export default function PaymentMethodScreen() {
         <Helmet>
           <title>Metoda de plata</title>
         </Helmet>
-        <h1 className="my-3">Metoda de plata</h1>
+        <h1
+          className="my-3"
+          style={{
+            fontSize: '24px',
+            fontWeight: 'bold',
+          }}
+        >
+          Metoda de plata
+        </h1>
         <Form onSubmit={submitHandler}>
           <div className="mb-3">
             <Form.Check

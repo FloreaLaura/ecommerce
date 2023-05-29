@@ -92,7 +92,14 @@ export default function UserListScreen() {
       <Helmet>
         <title>Utilizatori</title>
       </Helmet>
-      <h2>Utilizatori</h2>
+      <h2
+        style={{
+          fontSize: '23px',
+          fontWeight: 'bold',
+        }}
+      >
+        Utilizatori
+      </h2>
 
       {loadingDelete && <LoadingBox></LoadingBox>}
       {loading ? (

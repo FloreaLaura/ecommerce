@@ -60,7 +60,15 @@ export default function ResetPasswordScreen() {
       <Helmet>
         <title>Reseteaza parola</title>
       </Helmet>
-      <h1 className="my-3">Reseteaza parola</h1>
+      <h1
+        className="my-3"
+        style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Reseteaza parola
+      </h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="password">
           <Form.Label>Parola noua</Form.Label>

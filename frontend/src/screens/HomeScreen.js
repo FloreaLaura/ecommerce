@@ -97,7 +97,14 @@ function HomeScreen() {
       <Helmet>
         <title>NaturShop</title>
       </Helmet>
-      <h3>PRODUSE RECOMANDATE</h3>
+      <h3
+        style={{
+          fontSize: '20px',
+          fontWeight: 'bold',
+        }}
+      >
+        PRODUSE RECOMANDATE
+      </h3>
       {loading ? (
         <LoadingBox />
       ) : error ? (
@@ -108,7 +115,15 @@ function HomeScreen() {
         ></RecommendedProductSlider>
       )}
 
-      <h3>PRODUSE</h3>
+      <h3
+        style={{
+          fontSize: '20px',
+          fontWeight: 'bold',
+          marginTop: '10px',
+        }}
+      >
+        PRODUSE
+      </h3>
       <div className="products">
         {loading ? (
           <LoadingBox />

@@ -96,7 +96,14 @@ export default function OrderListScreen() {
         <Helmet>
           <title>Comenzi</title>
         </Helmet>
-        <h1>Comenzi</h1>
+        <h1
+          style={{
+            fontSize: '24px',
+            fontWeight: 'bold',
+          }}
+        >
+          Comenzi
+        </h1>
         {loadingDelete && <LoadingBox></LoadingBox>}
         {loading ? (
           <LoadingBox></LoadingBox>

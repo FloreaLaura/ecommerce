@@ -93,7 +93,15 @@ export default function ShippingAddressScreen() {
 
       <CheckoutSteps step1 step2></CheckoutSteps>
       <div className="container small-container">
-        <h1 className="my-3">Detalii livrare</h1>
+        <h1
+          className="my-3"
+          style={{
+            fontSize: '24px',
+            fontWeight: 'bold',
+          }}
+        >
+          Detalii livrare
+        </h1>
         <Form onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="fullName">
             <Form.Label>Nume</Form.Label>
