@@ -66,6 +66,17 @@ export default function PlaceOrderScreen() {
           },
         }
       );
+      for (const item of cart.cartItems) {
+        await Axios.put(
+          `/api/products/${item._id}`,
+          { countInStock: item.countInStock - item.quantity },
+          {
+            headers: {
+              authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+      }
       ctxDispatch({ type: 'CART_CLEAR' });
       dispatch({ type: 'CREATE_SUCCESS' });
       localStorage.removeItem('cartItems');

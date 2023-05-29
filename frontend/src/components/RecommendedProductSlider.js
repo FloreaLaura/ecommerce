@@ -1,12 +1,12 @@
-import axios from "axios";
-import { useContext } from "react";
-import { Store } from "../Store";
-import React from "react";
-import { useEffect, useReducer, useState } from "react";
-import { getError } from "../utils";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import RecProduct from "./RecProductCard";
+import axios from 'axios';
+import { useContext } from 'react';
+import { Store } from '../Store';
+import React from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import { getError } from '../utils';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import RecProduct from './RecProductCard';
 
 const responsive = {
   superLargeDesktop: {
@@ -16,7 +16,7 @@ const responsive = {
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 5,
+    items: 6,
     // partialVisibilityGutter:40,
   },
   tablet: {
@@ -31,11 +31,11 @@ const responsive = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "FETCH_REQUEST":
+    case 'FETCH_REQUEST':
       return { ...state, loading: true };
-    case "FETCH_SUCCESS":
+    case 'FETCH_SUCCESS':
       return { ...state, myOrders: action.payload, loading: false };
-    case "FETCH_FAIL":
+    case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
@@ -49,11 +49,11 @@ function RecommendedProductSlider(products) {
   let recProducts = [];
   const [{ loading, error, myOrders }, dispatch] = useReducer(reducer, {
     loading: true,
-    error: "",
+    error: '',
   });
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
+      dispatch({ type: 'FETCH_REQUEST' });
       try {
         const { data } = await axios.get(
           `/api/orders/myOrders`,
@@ -61,10 +61,10 @@ function RecommendedProductSlider(products) {
           { headers: { Authorization: `Bearer ${userInfo.token}` } }
         );
 
-        dispatch({ type: "FETCH_SUCCESS", payload: data });
+        dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (error) {
         dispatch({
-          type: "FETCH_FAIL",
+          type: 'FETCH_FAIL',
           payload: getError(error),
         });
       }
@@ -99,21 +99,23 @@ function RecommendedProductSlider(products) {
   if (recProducts.length < 12) {
     for (let i of itemOrderByQt) {
       for (let j of products.products) {
-        if (i.name === j.name) {
+        if (i.name === j.name && j.countInStock > 0) {
           recProducts.push(j);
         }
       }
     }
     products.products.sort((a, b) => b.rating - a.rating);
     for (let i of products.products) {
-      if (!uniqueItems.includes(i.name)) recProducts.push(i);
+      if (!uniqueItems.includes(i.name) && i.countInStock > 0) {
+        recProducts.push(i);
+      }
     }
   }
   return (
     <div className="recSlide">
       <Carousel responsive={responsive}>
-        {recProducts.map((product) => (
-          <div className="recCard">
+        {recProducts.map((product, index) => (
+          <div className="recCard" key={index}>
             <RecProduct className="recCard" product={product}></RecProduct>
           </div>
         ))}

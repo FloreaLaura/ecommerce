@@ -142,6 +142,27 @@ productRouter.put(
   })
 );
 
+productRouter.put(
+  '/update/:id',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const productId = req.params.id;
+    const countInStock = req.body.countInStock;
+
+    const updatedProduct = await Product.findOneAndUpdate(
+      { _id: productId },
+      { countInStock },
+      { new: true }
+    );
+
+    if (updatedProduct) {
+      res.send({ message: 'Product Updated', product: updatedProduct });
+    } else {
+      res.status(404).send({ message: 'Product Not Found' });
+    }
+  })
+);
+
 productRouter.delete(
   '/:id',
   isAuth,
