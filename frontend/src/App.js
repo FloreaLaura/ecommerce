@@ -38,6 +38,8 @@ import ResetPasswordScreen from './screens/ResetPasswordScreen';
 import ProductCreateScreen from './screens/ProductCreateScreen';
 import ContactScreen from './screens/ContactScreen';
 import MapScreen from './screens/MapScreen';
+import ChatScreen from './screens/ChatScreen';
+import ChatBox from './components/ChatBox';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -140,6 +142,9 @@ function App() {
                       />
                       Contact
                     </Link>
+                    {/* <Link to="/admin/chat" className="nav-link">
+                      chat
+                    </Link> */}
                     {userInfo ? (
                       <NavDropdown
                         title={userInfo.name}
@@ -170,6 +175,7 @@ function App() {
                           </NavDropdown.Item>
                         </LinkContainer>
                         <NavDropdown.Divider />
+
                         <Link
                           className="dropdown-item"
                           to="#signout"
@@ -212,6 +218,9 @@ function App() {
                         </LinkContainer>
                         <LinkContainer to="/admin/users">
                           <NavDropdown.Item>Utilizatori</NavDropdown.Item>
+                        </LinkContainer>
+                        <LinkContainer to="/admin/chat">
+                          <NavDropdown.Item>Chat</NavDropdown.Item>
                         </LinkContainer>
                       </NavDropdown>
                     )}
@@ -298,6 +307,14 @@ function App() {
                     </ProtectedRoute>
                   }
                 ></Route>
+                {/* <Route
+                  path="/admin/chat"
+                  element={
+                    <ProtectedRoute>
+                      <ChatScreen />
+                    </ProtectedRoute>
+                  }
+                /> */}
                 <Route
                   path="/shipping"
                   element={<ShippingAddressScreen />}
@@ -340,6 +357,14 @@ function App() {
                   }
                 ></Route>
                 <Route
+                  path="/admin/chat"
+                  element={
+                    <AdminRoute>
+                      <ChatScreen />
+                    </AdminRoute>
+                  }
+                />
+                <Route
                   path="/admin/product/:id"
                   element={
                     <AdminRoute>
@@ -360,6 +385,8 @@ function App() {
             </Container>
           </main>
         </div>
+        {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+        <div>All right reserved</div>{' '}
       </div>
     </BrowserRouter>
   );
