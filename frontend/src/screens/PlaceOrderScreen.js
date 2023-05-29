@@ -68,7 +68,7 @@ export default function PlaceOrderScreen() {
       );
       for (const item of cart.cartItems) {
         await Axios.put(
-          `/api/products/${item._id}`,
+          `/api/products/update/${item._id}`,
           { countInStock: item.countInStock - item.quantity },
           {
             headers: {
