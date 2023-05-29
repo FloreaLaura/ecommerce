@@ -104,8 +104,9 @@ function RecommendedProductSlider(products) {
         }
       }
     }
-    products.products.sort((a, b) => b.rating - a.rating);
-    for (let i of products.products) {
+    let sortedProducts = products.products.slice();
+    sortedProducts.sort((a, b) => b.rating - a.rating)
+    for (let i of sortedProducts) {
       if (!uniqueItems.includes(i.name) && i.countInStock > 0) {
         recProducts.push(i);
       }
