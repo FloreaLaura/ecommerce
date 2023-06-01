@@ -138,6 +138,7 @@ function ProductScreen() {
                 <title>{product.name}</title>
               </Helmet>
               <h1
+                className="text-center"
                 style={{
                   fontSize: '24px',
                   fontWeight: 'bold',
@@ -151,9 +152,12 @@ function ProductScreen() {
               <Rating
                 rating={product.rating}
                 numReviews={product.numReviews}
+                style={{ fontSize: '14px', color: 'gold', marginTop: '15px' }}
               ></Rating>
             </ListGroup.Item>
-            <ListGroup.Item>Producator: {product.brand}</ListGroup.Item>
+            <ListGroup.Item className="text-center">
+              Producator: {product.brand}
+            </ListGroup.Item>
             <ListGroup.Item>
               <Row xs={1} md={2} className="g-2">
                 {[product.image, ...product.images].map((x) => (

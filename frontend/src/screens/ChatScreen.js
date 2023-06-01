@@ -19,9 +19,7 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const userSignin = useSelector((state) => state.userInfo);
-  console.log(userSignin);
   const userInfo = userSignin;
-  console.log(userInfo);
   useEffect(() => {
     if (uiMessagesRef.current) {
       uiMessagesRef.current.scrollBy({
@@ -92,7 +90,7 @@ export default function ChatScreen() {
   const submitHandler = (e) => {
     e.preventDefault();
     if (!messageBody.trim()) {
-      alert('Error. Please type message.');
+      alert('Scrie un mesaj.');
     } else {
       allMessages = [
         ...allMessages,
@@ -115,7 +113,7 @@ export default function ChatScreen() {
     <div className="row top full-container">
       <div className="col-1 support-users">
         {users.filter((x) => x._id !== userInfo._id).length === 0 && (
-          <MessageBox>No Online User Found</MessageBox>
+          <MessageBox>Nu sunt utilizatori conectati</MessageBox>
         )}
         <ul>
           {users
@@ -143,14 +141,16 @@ export default function ChatScreen() {
       </div>
       <div className="col-3 support-messages">
         {!selectedUser._id ? (
-          <MessageBox>Select a user to start chat</MessageBox>
+          <MessageBox className="wider">
+            Selecteaza un utilizator pentru a incepe conversatia
+          </MessageBox>
         ) : (
           <div>
             <div className="row">
-              <strong>Chat with {selectedUser.name} </strong>
+              <strong>Conversatie cu {selectedUser.name} </strong>
             </div>
             <ul ref={uiMessagesRef}>
-              {messages.length === 0 && <li>No message.</li>}
+              {messages.length === 0 && <li>Fara mesaje.</li>}
               {messages.map((msg, index) => (
                 <li key={index}>
                   <strong>{`${msg.name}: `}</strong> {msg.body}
@@ -163,10 +163,27 @@ export default function ChatScreen() {
                   value={messageBody}
                   onChange={(e) => setMessageBody(e.target.value)}
                   type="text"
-                  placeholder="type message"
+                  placeholder="Scrie mesajul aici..."
+                  style={{
+                    width: '100%',
+                    padding: '0.5rem',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                  }}
                 />
-                <button type="submit" onClick={submitHandler}>
-                  Send
+                <button
+                  type="submit"
+                  onClick={submitHandler}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Trimite
                 </button>
               </form>
             </div>

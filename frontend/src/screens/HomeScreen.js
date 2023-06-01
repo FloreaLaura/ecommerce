@@ -40,15 +40,13 @@ function HomeScreen() {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const userSignin = useSelector((state) => state.userInfo);
-  console.log(userSignin);
   const userInfo = userSignin;
-  console.log(userInfo);
-
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     products: [],
     loading: true,
     error: '',
   });
+
   useEffect(() => {
     if (uiMessagesRef.current) {
       uiMessagesRef.current.scrollBy({
