@@ -3,7 +3,7 @@ import socketIOClient from 'socket.io-client';
 
 const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0
-    ? 'http://127.0.0.1:5000'
+    ? 'http://127.0.0.1:4000'
     : window.location.host;
 
 export default function ChatBox(props) {
@@ -13,7 +13,10 @@ export default function ChatBox(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [messageBody, setMessageBody] = useState('');
   const [messages, setMessages] = useState([
-    { name: 'Admin', body: 'Hello there, Please ask your question.' },
+    {
+      name: 'Admin',
+      body: 'Buna ziua, sunt aici pentru a va raspunde la intrebari.',
+    },
   ]);
 
   useEffect(() => {
@@ -45,7 +48,7 @@ export default function ChatBox(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     if (!messageBody.trim()) {
-      alert('Error. Please type message.');
+      alert('Scrie un mesaj.');
     } else {
       setMessages([...messages, { body: messageBody, name: userInfo.name }]);
       setMessageBody('');
@@ -65,14 +68,24 @@ export default function ChatBox(props) {
   return (
     <div className="chatbox">
       {!isOpen ? (
-        <button type="button" onClick={supportHandler}>
+        <button
+          type="button"
+          onClick={supportHandler}
+          className="chat-support-button"
+        >
+          Chat Support
           <i className="fa fa-support" />
         </button>
       ) : (
-        <div className="card card-body">
-          <div className="row">
-            <strong>Support </strong>
-            <button type="button" onClick={closeHandler}>
+        <div className="card card-body" style={{ width: '400px' }}>
+          <div className="row position-relative">
+            <button
+              type="button"
+              onClick={closeHandler}
+              className="close-button"
+            >
+              {' '}
+              Inchide chatul
               <i className="fa fa-close" />
             </button>
           </div>
@@ -84,14 +97,14 @@ export default function ChatBox(props) {
             ))}
           </ul>
           <div>
-            <form onSubmit={submitHandler} className="row">
+            <form onSubmit={submitHandler} className="row input-container">
               <input
                 value={messageBody}
                 onChange={(e) => setMessageBody(e.target.value)}
                 type="text"
-                placeholder="type message"
+                placeholder="Scrie mesajul aici..."
               />
-              <button type="submit">Send</button>
+              <button type="submit">Trimite</button>
             </form>
           </div>
         </div>

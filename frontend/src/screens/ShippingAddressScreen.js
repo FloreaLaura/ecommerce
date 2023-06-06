@@ -20,6 +20,19 @@ export default function ShippingAddressScreen() {
   const [postalCode, setPostalCode] = useState(
     shippingAddress.postalCode || ''
   );
+
+  useEffect(() => {
+    const shippingAddress = localStorage.getItem('shippingAddress');
+    if (shippingAddress) {
+      const parsedShippingAddress = JSON.parse(shippingAddress);
+      setFullName(parsedShippingAddress.fullName || '');
+      setAddress(parsedShippingAddress.address || '');
+      setCity(parsedShippingAddress.city || '');
+      setPostalCode(parsedShippingAddress.postalCode || '');
+      setCountry(parsedShippingAddress.country || '');
+    }
+  }, []);
+
   useEffect(() => {
     if (!userInfo) {
       navigate('/signin?redirect=/shipping');
@@ -53,6 +66,21 @@ export default function ShippingAddressScreen() {
     navigate('/payment');
   };
 
+  function navigateonMap() {
+    localStorage.setItem(
+      'shippingAddress',
+      JSON.stringify({
+        fullName,
+        address,
+        city,
+        postalCode,
+        country,
+        location: shippingAddress.location,
+      })
+    );
+    navigate('/map');
+  }
+
   useEffect(() => {
     ctxDispatch({ type: 'SET_FULLBOX_OFF' });
   }, [ctxDispatch, fullBox]);
@@ -65,7 +93,15 @@ export default function ShippingAddressScreen() {
 
       <CheckoutSteps step1 step2></CheckoutSteps>
       <div className="container small-container">
-        <h1 className="my-3">Shipping Address</h1>
+        <h1
+          className="my-3"
+          style={{
+            fontSize: '24px',
+            fontWeight: 'bold',
+          }}
+        >
+          Detalii livrare
+        </h1>
         <Form onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="fullName">
             <Form.Label>Nume</Form.Label>
@@ -97,6 +133,8 @@ export default function ShippingAddressScreen() {
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
               required
+              pattern="\d{6}"
+              title="Codul postal trebuie să conțină exact 6 cifre."
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="country">
@@ -112,17 +150,19 @@ export default function ShippingAddressScreen() {
               id="chooseOnMap"
               type="button"
               variant="light"
-              onClick={() => navigate('/map')}
+              onClick={navigateonMap}
+              // {() => navigate('/map')}
             >
               Alege locatia pe harta
             </Button>
             {shippingAddress.location && shippingAddress.location.lat ? (
-              <div style={{ display: 'block' }}>
-                Latitudine: {shippingAddress.location.lat} <br />
-                Longitudine:{shippingAddress.location.lng}
+              <div style={{ display: 'block', fontWeight: 'bold' }}>
+                {/* Latitudine: {shippingAddress.location.lat} <br />
+                Longitudine:{shippingAddress.location.lng} */}
+                <br /> Locatie adaugata
               </div>
             ) : (
-              <div>Fara locatie</div>
+              <div style={{ marginTop: '20px' }}>Fara locatie</div>
             )}
           </div>
 

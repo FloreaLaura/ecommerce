@@ -52,7 +52,14 @@ export default function DashboardScreen() {
 
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h2
+        style={{
+          fontSize: '23px',
+          fontWeight: 'bold',
+        }}
+      >
+        Statistici
+      </h2>
       {loading ? (
         <LoadingBox />
       ) : error ? (
@@ -68,7 +75,7 @@ export default function DashboardScreen() {
                       ? summary.users[0].numUsers
                       : 0}
                   </Card.Title>
-                  <Card.Text> Users</Card.Text>
+                  <Card.Text>Utilizatori</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
@@ -80,7 +87,7 @@ export default function DashboardScreen() {
                       ? summary.orders[0].numOrders
                       : 0}
                   </Card.Title>
-                  <Card.Text> Orders</Card.Text>
+                  <Card.Text> Numar comenzi</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
@@ -88,20 +95,27 @@ export default function DashboardScreen() {
               <Card>
                 <Card.Body>
                   <Card.Title>
-                    $
                     {summary.orders && summary.users[0]
                       ? summary.orders[0].totalSales.toFixed(2)
-                      : 0}
+                      : 0}{' '}
+                    RON
                   </Card.Title>
-                  <Card.Text> Orders</Card.Text>
+                  <Card.Text> Total comenzi</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <div className="my-3">
-            <h2>Sales</h2>
+            <h2
+              style={{
+                fontSize: '23px',
+                fontWeight: 'bold',
+              }}
+            >
+              Vanzari
+            </h2>
             {summary.dailyOrders.length === 0 ? (
-              <MessageBox>No Sale</MessageBox>
+              <MessageBox>Fara vanzari</MessageBox>
             ) : (
               <Chart
                 width="100%"
@@ -109,16 +123,31 @@ export default function DashboardScreen() {
                 chartType="AreaChart"
                 loader={<div>Loading Chart...</div>}
                 data={[
-                  ['Date', 'Sales'],
+                  ['Data', 'Vanzari'],
                   ...summary.dailyOrders.map((x) => [x._id, x.sales]),
                 ]}
+                options={{
+                  vAxis: {
+                    title: 'Vanzari (RON)',
+                  },
+                  hAxis: {
+                    title: 'DATA',
+                  },
+                }}
               ></Chart>
             )}
           </div>
           <div className="my-3">
-            <h2>Categories</h2>
+            <h2
+              style={{
+                fontSize: '23px',
+                fontWeight: 'bold',
+              }}
+            >
+              Categorii
+            </h2>
             {summary.productCategories.length === 0 ? (
-              <MessageBox>No Category</MessageBox>
+              <MessageBox>Fara categorii</MessageBox>
             ) : (
               <Chart
                 width="100%"

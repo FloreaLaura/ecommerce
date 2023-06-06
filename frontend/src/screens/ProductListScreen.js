@@ -83,7 +83,6 @@ export default function ProductListScreen() {
         const { data } = await axios.get(`/api/products/admin?page=${page} `, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {}
     };
@@ -95,39 +94,41 @@ export default function ProductListScreen() {
     }
   }, [page, userInfo, successDelete]);
 
-  const createHandler = async () => {
-    if (window.confirm('Are you sure to create?')) {
-      try {
-        dispatch({ type: 'CREATE_REQUEST' });
-        const { data } = await axios.post(
-          '/api/products',
-          {},
-          {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-          }
-        );
-        toast.success('product created successfully');
-        dispatch({ type: 'CREATE_SUCCESS' });
-        navigate(`/admin/product/${data.product._id}`);
-      } catch (err) {
-        toast.error(getError(error));
-        dispatch({
-          type: 'CREATE_FAIL',
-        });
-      }
-    }
-  };
-
   const deleteHandler = async (product) => {
-    if (window.confirm('Are you sure to delete?')) {
+    if (window.confirm('Esti sigur ca doresti sa stergi acest produs?')) {
       try {
-        await axios.delete(`/api/products/${product._id}`, {
+        const { data } = await axios.get('/api/orders', {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        toast.success('product deleted successfully');
-        dispatch({ type: 'DELETE_SUCCESS' });
+
+        const undeliveredOrdersData = data.filter(
+          (order) =>
+            !order.isDelivered &&
+            order.orderItems.some(
+              (orderItem) => orderItem.product === product._id
+            )
+        );
+
+        console.log('undeliveredOrdersData:', undeliveredOrdersData);
+
+        const hasUndeliveredOrder = undeliveredOrdersData.length > 0;
+
+        console.log('hasUndeliveredOrder:', hasUndeliveredOrder);
+
+        if (hasUndeliveredOrder) {
+          toast.error(
+            'Produsul nu poate fi sters deoarece este asociat unei comenzi active.'
+          );
+        } else {
+          await axios.delete(`/api/products/${product._id}`, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          });
+          toast.success('Produsul a fost sters cu succes');
+          dispatch({ type: 'DELETE_SUCCESS' });
+        }
       } catch (err) {
-        toast.error(getError(error));
+        console.log('Error:', err);
+        toast.error(getError(err));
         dispatch({
           type: 'DELETE_FAIL',
         });
@@ -139,13 +140,22 @@ export default function ProductListScreen() {
     <div>
       <Row>
         <Col>
-          <h1>Products</h1>
+          <h1
+            style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+            }}
+          >
+            Produse
+          </h1>
         </Col>
         <Col className="col text-end">
           <div>
-            <Button type="button" onClick={createHandler}>
-              Create Product
-            </Button>
+            <Link to="/create-product">
+              <button className="btnAdauga" type="button">
+                Adauga produs
+              </button>
+            </Link>
           </div>
         </Col>
       </Row>
@@ -161,13 +171,13 @@ export default function ProductListScreen() {
         <>
           <table className="table">
             <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
-                <th>ACTIONS</th>
+              <tr className="table-header-row">
+                <th className="table-header">COD PRODUS</th>
+                <th className="table-header">DENUMIRE</th>
+                <th className="table-header">PRET</th>
+                <th className="table-header">CATEGORIE</th>
+                <th className="table-header">PRODUCATOR</th>
+                <th className="table-header">ACTIUNI</th>
               </tr>
             </thead>
             <tbody>
@@ -175,7 +185,7 @@ export default function ProductListScreen() {
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
-                  <td>{product.price}</td>
+                  <td>{product.price} RON</td>
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
                   <td>
@@ -184,7 +194,7 @@ export default function ProductListScreen() {
                       variant="light"
                       onClick={() => navigate(`/admin/product/${product._id}`)}
                     >
-                      Edit
+                      Editeaza
                     </Button>
                     &nbsp;
                     <Button
@@ -192,7 +202,7 @@ export default function ProductListScreen() {
                       variant="light"
                       onClick={() => deleteHandler(product)}
                     >
-                      Delete
+                      Sterge
                     </Button>
                   </td>
                 </tr>

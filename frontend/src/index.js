@@ -7,18 +7,22 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StoreProvider } from './Store';
+import { Provider } from 'react-redux';
+import store from './ReduxStore';
 
 const root = createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <StoreProvider>
-      <HelmetProvider>
-        <PayPalScriptProvider deferLoading={true}>
-          <App />
-        </PayPalScriptProvider>
-      </HelmetProvider>
-    </StoreProvider>
+    <Provider store={store}>
+      <StoreProvider>
+        <HelmetProvider>
+          <PayPalScriptProvider deferLoading={true}>
+            <App />
+          </PayPalScriptProvider>
+        </HelmetProvider>
+      </StoreProvider>
+    </Provider>
   </React.StrictMode>
 );
 

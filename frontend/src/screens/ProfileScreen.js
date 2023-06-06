@@ -52,7 +52,7 @@ export default function ProfileScreen() {
       });
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
-      toast.success('User updated successfully');
+      toast.success('Datele contului au fost atualizate cu succes');
     } catch (err) {
       dispatch({
         type: 'FETCH_FAIL',
@@ -64,12 +64,30 @@ export default function ProfileScreen() {
   return (
     <div className="container small-container">
       <Helmet>
-        <title>User Profile</title>
+        <title>Profil</title>
       </Helmet>
-      <h1 className="my-3">User Profile</h1>
+      <h1
+        className="my-3"
+        style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Profil
+      </h1>
+      <h5 className="person-title">
+        <img
+          src="images\person.png"
+          alt="Icon"
+          className="icon"
+          width="25"
+          height="25"
+        />
+        Date Personale
+      </h5>
       <form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>Nume</Form.Label>
           <Form.Control
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -86,21 +104,23 @@ export default function ProfileScreen() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Parola</Form.Label>
           <Form.Control
             type="password"
+            required
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Confirm Password</Form.Label>
+          <Form.Label>Confirma Parola</Form.Label>
           <Form.Control
+            required
             type="password"
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Form.Group>
         <div className="mb-3">
-          <Button type="submit">Update</Button>
+          <Button type="submit">Actualizati</Button>
         </div>
       </form>
     </div>

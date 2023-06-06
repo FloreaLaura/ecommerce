@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Button from 'react-bootstrap/Button';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -114,7 +115,7 @@ export default function ProductEditScreen() {
       dispatch({
         type: 'UPDATE_SUCCESS',
       });
-      toast.success('Product updated successfully');
+      toast.success('Produs actualizat cu succes');
       navigate('/admin/products');
     } catch (err) {
       toast.error(getError(err));
@@ -140,7 +141,7 @@ export default function ProductEditScreen() {
       } else {
         setImage(data.secure_url);
       }
-      toast.success('Image uploaded successfully. click Update to apply it');
+      toast.success('Imaginea a fost adaugata cu succes.');
     } catch (err) {
       toast.error(getError(err));
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
@@ -151,14 +152,21 @@ export default function ProductEditScreen() {
     console.log(images);
     console.log(images.filter((x) => x !== fileName));
     setImages(images.filter((x) => x !== fileName));
-    toast.success('Image removed successfully. click Update to apply it');
+    toast.success('Imaginea a fost eliminata cu succes.');
   };
   return (
     <Container className="small-container">
       <Helmet>
-        <title>Editeaza produsul ${productId}</title>
+        <title>Editeaza Produsul</title>
       </Helmet>
-      <h1>Editeaza produsul {productId}</h1>
+      <h1
+        style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Editeaza produsul
+      </h1>
 
       {loading ? (
         <LoadingBox></LoadingBox>
@@ -167,7 +175,7 @@ export default function ProductEditScreen() {
       ) : (
         <Form onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="name">
-            <Form.Label>Nume</Form.Label>
+            <Form.Label>Denumire</Form.Label>
             <Form.Control
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -175,15 +183,21 @@ export default function ProductEditScreen() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="slug">
-            <Form.Label>Cod</Form.Label>
-            <Form.Control
-              value={slug}
-              onChange={(e) => setSlug(e.target.value)}
-              required
-            />
+            <Form.Label>ID produs</Form.Label>
+            <FloatingLabel
+              controlId="floatingTextarea"
+              label="Formatul ID-ului este de tipul: denumire-produs"
+              className="mb-3"
+            >
+              <Form.Control
+                value={slug}
+                onChange={(e) => setSlug(e.target.value)}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
           <Form.Group className="mb-3" controlId="name">
-            <Form.Label>Cod</Form.Label>
+            <Form.Label>Pret</Form.Label>
             <Form.Control
               value={price}
               onChange={(e) => setPrice(e.target.value)}
@@ -191,7 +205,7 @@ export default function ProductEditScreen() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="image">
-            <Form.Label>Fisierul imaginii</Form.Label>
+            <Form.Label>Fisierul imagine</Form.Label>
             <Form.Control
               value={image}
               onChange={(e) => setImage(e.target.value)}
@@ -199,13 +213,13 @@ export default function ProductEditScreen() {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="imageFile">
-            <Form.Label>Adauga imagine</Form.Label>
+            <Form.Label>Incarca imagine</Form.Label>
             <Form.Control type="file" onChange={uploadFileHandler} />
             {loadingUpload && <LoadingBox></LoadingBox>}
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="additionalImage">
-            <Form.Label>Imagini suplimentare</Form.Label>
+            <Form.Label>Fisierul Imagine suplimentara</Form.Label>
             {images.length === 0 && <MessageBox>No image</MessageBox>}
             <ListGroup variant="flush">
               {images.map((x) => (
@@ -219,29 +233,45 @@ export default function ProductEditScreen() {
             </ListGroup>
           </Form.Group>
           <Form.Group className="mb-3" controlId="additionalImageFile">
-            <Form.Label>Incarcati o imagine suplimentara</Form.Label>
+            <Form.Label>Incarca imagine suplimentara</Form.Label>
             <Form.Control
               type="file"
               onChange={(e) => uploadFileHandler(e, true)}
             />
             {loadingUpload && <LoadingBox></LoadingBox>}
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="category">
             <Form.Label>Categorie</Form.Label>
             <Form.Control
+              as="select"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               required
-            />
+            >
+              <option value="">Selectați o categorie</option>
+              <option value="Ceai">Ceai</option>
+              <option value="Sirop">Sirop</option>
+              <option value="Suplimente">Suplimente</option>
+              <option value="Ulei">Ulei</option>
+            </Form.Control>
           </Form.Group>
+
           <Form.Group className="mb-3" controlId="brand">
             <Form.Label>Producator</Form.Label>
             <Form.Control
+              as="select"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
               required
-            />
+            >
+              <option value="">Selectați producatorul</option>
+              <option value="DACIA PLANT">DACIA PLANT</option>
+              <option value="YOGI TEA">YOGI TEA</option>
+              <option value="Sonnentor">Sonnentor</option>
+              <option value="Arom Science">Arom Science</option>
+              <option value="Parapharm">Parapharm</option>
+              <option value="PlantExtrakt">PlantExtrakt</option>
+            </Form.Control>
           </Form.Group>
           <Form.Group className="mb-3" controlId="countInStock">
             <Form.Label>Produse in stoc</Form.Label>
@@ -261,7 +291,7 @@ export default function ProductEditScreen() {
           </Form.Group>
           <div className="mb-3">
             <Button disabled={loadingUpdate} type="submit">
-              Actualizati
+              Modifica
             </Button>
             {loadingUpdate && <LoadingBox></LoadingBox>}
           </div>

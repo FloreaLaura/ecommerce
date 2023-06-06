@@ -52,10 +52,20 @@ export default function OrderHistoryScreen() {
   return (
     <div>
       <Helmet>
-        <title>Order History</title>
+        <title>Istoric cumparaturi</title>
       </Helmet>
 
-      <h1>Order History</h1>
+      <h2>
+        {' '}
+        <img
+          src="images\history.png"
+          alt="Icon"
+          className="icon"
+          width="30"
+          height="30"
+        />
+        Istoric cumparaturi
+      </h2>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -64,12 +74,12 @@ export default function OrderHistoryScreen() {
         <table className="table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>DATE</th>
+              <th>COD COMANDA</th>
+              <th>DATA</th>
               <th>TOTAL</th>
-              <th>PAID</th>
-              <th>DELIVERED</th>
-              <th>ACTIONS</th>
+              <th>Platita</th>
+              <th>Livrata</th>
+              <th>Detalii</th>
             </tr>
           </thead>
           <tbody>
@@ -77,12 +87,12 @@ export default function OrderHistoryScreen() {
               <tr key={order._id}>
                 <td>{order._id}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
-                <td>{order.totalPrice.toFixed(2)}</td>
-                <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
+                <td>{order.totalPrice.toFixed(2)} RON</td>
+                <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'Nu'}</td>
                 <td>
                   {order.isDelivered
                     ? order.deliveredAt.substring(0, 10)
-                    : 'No'}
+                    : 'Nu'}
                 </td>
                 <td>
                   <Button
@@ -92,7 +102,7 @@ export default function OrderHistoryScreen() {
                       navigate(`/order/${order._id}`);
                     }}
                   >
-                    Details
+                    Vezi Detalii
                   </Button>
                 </td>
               </tr>

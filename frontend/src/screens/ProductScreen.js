@@ -75,7 +75,7 @@ function ProductScreen() {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert('Scuze. Cantitatea ceruta depaseste stocul disponibil. ');
       return;
     }
     ctxDispatch({
@@ -88,7 +88,7 @@ function ProductScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!comment || !rating) {
-      toast.error('Please enter comment and rating');
+      toast.error('Vă rugăm să introduceți comentariul și evaluarea');
       return;
     }
     try {
@@ -137,15 +137,27 @@ function ProductScreen() {
               <Helmet>
                 <title>{product.name}</title>
               </Helmet>
-              <h1>{product.name}</h1>
-            </ListGroup.Item>
-            <ListGroup.Item>
+              <h1
+                className="text-center"
+                style={{
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                }}
+              >
+                {product.name}
+              </h1>
+              {/* </ListGroup.Item>
+            <ListGroup.Item>Pret: {product.price} RON</ListGroup.Item>
+            <ListGroup.Item> */}
               <Rating
                 rating={product.rating}
                 numReviews={product.numReviews}
+                style={{ fontSize: '14px', color: 'gold', marginTop: '15px' }}
               ></Rating>
             </ListGroup.Item>
-            <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
+            <ListGroup.Item className="text-center">
+              Producator: {product.brand}
+            </ListGroup.Item>
             <ListGroup.Item>
               <Row xs={1} md={2} className="g-2">
                 {[product.image, ...product.images].map((x) => (
@@ -169,9 +181,26 @@ function ProductScreen() {
                 ))}
               </Row>
             </ListGroup.Item>
-            <ListGroup.Item className="listGroupDescription">
-              <p className="description"> Descriere: </p>
-              <p className="descriptionText">{product.description}</p>
+            <ListGroup.Item
+              className="listGroupDescription"
+              style={{
+                border: '1px solid grey',
+                padding: '10px',
+                borderRadius: '8px',
+              }}
+            >
+              <p
+                className="description"
+                style={{ color: 'black', fontSize: '18px', fontWeight: 'bold' }}
+              >
+                Descriere:
+              </p>
+              <p
+                className="descriptionText"
+                style={{ color: 'black', fontSize: '14px' }}
+              >
+                {product.description}
+              </p>
             </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -232,9 +261,15 @@ function ProductScreen() {
         <div className="my-3">
           {userInfo ? (
             <form onSubmit={submitHandler}>
-              <h2>Adauga o recenzie</h2>
+              <h2
+                style={{
+                  fontSize: '23px',
+                  fontWeight: 'bold',
+                }}
+              >
+                Adauga o recenzie
+              </h2>
               <Form.Group className="mb-3" controlId="rating">
-                <Form.Label>Rating</Form.Label>
                 <Form.Select
                   aria-label="Rating"
                   value={rating}
@@ -263,7 +298,7 @@ function ProductScreen() {
 
               <div className="mb-3">
                 <Button disabled={loadingCreateReview} type="submit">
-                  Adauga
+                  Adauga recenzie
                 </Button>
                 {loadingCreateReview && <LoadingBox></LoadingBox>}
               </div>

@@ -12,7 +12,9 @@ orderRouter.get(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find().populate('user', 'name');
+    const orders = await Order.find()
+      .populate('user', 'name')
+      .sort({ createdAt: -1 });
     res.send(orders);
   })
 );
@@ -85,7 +87,17 @@ orderRouter.get(
   '/mine',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({ user: req.user._id });
+    const orders = await Order.find({ user: req.user._id }).sort({
+      createdAt: -1,
+    });
+    res.send(orders);
+  })
+);
+orderRouter.get(
+  '/myOrders',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id })
     res.send(orders);
   })
 );
@@ -107,11 +119,35 @@ orderRouter.put(
   '/:id/deliver',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate(
+      'user',
+      'email name'
+    );
     if (order) {
       order.isDelivered = true;
       order.deliveredAt = Date.now();
+      order.isPaid = true;
+      order.paidAt = Date.now();
       await order.save();
+
+      mailgun()
+        .messages()
+        .send(
+          {
+            from: 'NaturShop <service@mail.naturshop.com>',
+            to: `${order.user.name} <${order.user.email}>`,
+            subject: `Comanda noua ${order._id}`,
+            html: payOrderEmailTemplate(order),
+          },
+          (error, body) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(body);
+            }
+          }
+        );
+
       res.send({ message: 'Order Delivered' });
     } else {
       res.status(404).send({ message: 'Order Not Found' });

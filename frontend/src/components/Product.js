@@ -32,18 +32,55 @@ function Product(props) {
       <Link to={`/product/${product.slug}`}>
         <img src={product.image} className="card-img-top" alt={product.name} />
       </Link>
-      <Card.Body>
+      <Card.Body className="d-flex flex-column align-items-center justify-content-center">
         <Link to={`/product/${product.slug}`}>
-          <Card.Title>{product.name}</Card.Title>
+          <Card.Title style={{ fontSize: '18px', fontWeight: 'bold' }}>
+            {product.name}
+          </Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
-        <Card.Text>{product.price} RON</Card.Text>
+        <Card.Text
+          style={{
+            fontSize: '18px',
+            color: 'dark-grey',
+            marginTop: '5px',
+            marginBottom: '1px',
+          }}
+        >
+          {product.price} RON
+        </Card.Text>
         {product.countInStock === 0 ? (
-          <Button variant="light" disabled>
+          <Button
+            variant="light"
+            disabled
+            style={{
+              backgroundColor: '#f8f9fa',
+              pointerEvents: 'auto',
+              width: '100%',
+              marginTop: '1px',
+            }}
+          >
             Nu este in stoc
           </Button>
         ) : (
-          <Button onClick={() => addToCartHandler(product)}>
+          <Button
+            onClick={() => addToCartHandler(product)}
+            style={{
+              color: '#212529',
+              border: '1px solid #ced4da',
+              borderRadius: '4px',
+              padding: '8px 16px',
+              cursor: 'pointer',
+              outline: 'none',
+              boxShadow: 'none',
+              textDecoration: 'none',
+              transition:
+                'background-color 0.3s, color 0.3s, border-color 0.3s',
+              pointerEvents: 'auto',
+              width: '100%',
+              marginTop: '1px',
+            }}
+          >
             Adauga in cos
           </Button>
         )}

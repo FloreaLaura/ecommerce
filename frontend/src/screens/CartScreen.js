@@ -41,7 +41,21 @@ export default function CartScreen() {
       <Helmet>
         <title>Cos de cumparaturi</title>
       </Helmet>
-      <h1>Cos de cumparaturi</h1>
+      <h2
+        style={{
+          fontSize: '23px',
+          fontWeight: 'bold',
+        }}
+      >
+        <img
+          src="images\shopping.png"
+          alt="Icon"
+          className="icon"
+          width="30"
+          height="30"
+        />
+        Cos de cumparaturi
+      </h2>
       <Row>
         <Col md={8}>
           {cartItems.length === 0 ? (
@@ -102,7 +116,12 @@ export default function CartScreen() {
             <Card.Body>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h3>
+                  <h3
+                    style={{
+                      fontSize: '20px',
+                      fontWeight: 'bold',
+                    }}
+                  >
                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
                     produse) :
                     {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}{' '}

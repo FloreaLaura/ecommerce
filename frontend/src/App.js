@@ -33,9 +33,13 @@ import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
-import MapScreen from './screens/MapScreen';
 import ForgetPasswordScreen from './screens/ForgetPasswordScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
+import ProductCreateScreen from './screens/ProductCreateScreen';
+import ContactScreen from './screens/ContactScreen';
+import MapScreen from './screens/MapScreen';
+import ChatScreen from './screens/ChatScreen';
+import ChatBox from './components/ChatBox';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -93,60 +97,129 @@ function App() {
                 </Button>
 
                 <LinkContainer to="/">
-                  <Navbar.Brand>NaturShop</Navbar.Brand>
+                  <Navbar.Brand>
+                    <img
+                      src="images\leaf.png"
+                      alt="Icon"
+                      className="icon"
+                      width="30"
+                      height="30"
+                    />
+                    NaturShop
+                  </Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                   <SearchBox />
                   <Nav className="me-auto  w-100  justify-content-end">
-                    <Link to="/cart" className="nav-link">
-                      Cos de cumparaturi
+                    <Link
+                      to="/cart"
+                      className="nav-link"
+                      style={{ marginRight: '30px' }}
+                    >
+                      <img
+                        src="images\shopping.png"
+                        alt="Icon"
+                        className="icon"
+                        width="22"
+                        height="22"
+                      />
+                      <span className="link-text">Cos de cumparaturi</span>
                       {cart.cartItems.length > 0 && (
                         <Badge pill bg="danger">
                           {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                         </Badge>
                       )}
                     </Link>
+                    <Link to="/contact" className="nav-link">
+                      <img
+                        src="images\contact.png"
+                        alt="Icon"
+                        className="icon"
+                        width="20"
+                        height="20"
+                      />
+                      Contact
+                    </Link>
+                    {/* <Link to="/admin/chat" className="nav-link">
+                      chat
+                    </Link> */}
                     {userInfo ? (
                       <NavDropdown
                         title={userInfo.name}
                         id="basic-nav-dropdown"
                       >
                         <LinkContainer to="/profile">
-                          <NavDropdown.Item>User Profile</NavDropdown.Item>
+                          <NavDropdown.Item>
+                            <img
+                              src="images\person.png"
+                              alt="Icon"
+                              className="icon"
+                              width="20"
+                              height="20"
+                            />
+                            Profil
+                          </NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/orderhistory">
                           <NavDropdown.Item>
-                            Istoric de cumparaturi
+                            <img
+                              src="images\history.png"
+                              alt="Icon"
+                              className="icon"
+                              width="20"
+                              height="20"
+                            />
+                            Istoric cumparaturi
                           </NavDropdown.Item>
                         </LinkContainer>
                         <NavDropdown.Divider />
+
                         <Link
                           className="dropdown-item"
                           to="#signout"
                           onClick={signoutHandler}
                         >
-                          Sign Out
+                          <img
+                            src="images\logout.png"
+                            alt="Icon"
+                            className="icon"
+                            width="20"
+                            height="20"
+                          />
+                          Deconecteaza-te
                         </Link>
                       </NavDropdown>
                     ) : (
                       <Link className="nav-link" to="/signin">
-                        Sign In
+                        Conecteaza-te
                       </Link>
                     )}
                     {userInfo && userInfo.isAdmin && (
                       <NavDropdown title="Admin" id="admin-nav-dropdown">
                         <LinkContainer to="/admin/dashboard">
-                          <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                          <NavDropdown.Item>
+                            <img
+                              src="images\statistics.png"
+                              alt="Icon"
+                              className="icon"
+                              width="20"
+                              height="20"
+                            />
+                            Statistici
+                          </NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/admin/products">
-                          <NavDropdown.Item>Products</NavDropdown.Item>
+                          <NavDropdown.Item>Produse</NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/admin/orders">
-                          <NavDropdown.Item>Orders</NavDropdown.Item>
+                          <NavDropdown.Item>Comenzi</NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/admin/users">
-                          <NavDropdown.Item>Users</NavDropdown.Item>
+                          <NavDropdown.Item>Utilizatori</NavDropdown.Item>
+                        </LinkContainer>
+                        <LinkContainer to="/admin/chat">
+                          <NavDropdown.Item>Chat</NavDropdown.Item>
                         </LinkContainer>
                       </NavDropdown>
                     )}
@@ -186,6 +259,11 @@ function App() {
                 <Route path="/search" element={<SearchScreen />} />
                 <Route path="/signin" element={<SigninScreen />} />
                 <Route path="/signup" element={<SignupScreen />} />
+                <Route path="/contact" element={<ContactScreen />}></Route>
+                <Route
+                  path="/create-product"
+                  element={<ProductCreateScreen />}
+                />
                 <Route
                   path="/forget-password"
                   element={<ForgetPasswordScreen />}
@@ -194,7 +272,6 @@ function App() {
                   path="/reset-password/:token"
                   element={<ResetPasswordScreen />}
                 />
-
                 <Route
                   path="/profile"
                   element={
@@ -203,6 +280,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                :{' '}
                 <Route
                   path="/map"
                   element={
@@ -228,6 +306,14 @@ function App() {
                     </ProtectedRoute>
                   }
                 ></Route>
+                {/* <Route
+                  path="/admin/chat"
+                  element={
+                    <ProtectedRoute>
+                      <ChatScreen />
+                    </ProtectedRoute>
+                  }
+                /> */}
                 <Route
                   path="/shipping"
                   element={<ShippingAddressScreen />}
@@ -270,6 +356,14 @@ function App() {
                   }
                 ></Route>
                 <Route
+                  path="/admin/chat"
+                  element={
+                    <AdminRoute>
+                      <ChatScreen />
+                    </AdminRoute>
+                  }
+                />
+                <Route
                   path="/admin/product/:id"
                   element={
                     <AdminRoute>
@@ -285,12 +379,13 @@ function App() {
                     </AdminRoute>
                   }
                 ></Route>
-
                 <Route path="/" element={<HomeScreen />} />
               </Routes>
             </Container>
           </main>
         </div>
+        {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+        <div>All right reserved</div>{' '}
       </div>
     </BrowserRouter>
   );

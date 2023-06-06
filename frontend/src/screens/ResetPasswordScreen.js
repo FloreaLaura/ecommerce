@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Store } from '../Store';
 import { getError } from '../utils';
+import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 
 export default function ResetPasswordScreen() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function ResetPasswordScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error('Parolele nu coincid');
       return;
     }
     try {
@@ -37,38 +38,71 @@ export default function ResetPasswordScreen() {
         token,
       });
       navigate('/signin');
-      toast.success('Password updated successfully');
+      toast.success('Parola a fost actualizata cu succes');
     } catch (err) {
       toast.error(getError(err));
     }
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handlePasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleConfirmPasswordToggle = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
   return (
     <Container className="small-container">
       <Helmet>
-        <title>Reset Password</title>
+        <title>Reseteaza parola</title>
       </Helmet>
-      <h1 className="my-3">Reset Password</h1>
+      <h1
+        className="my-3"
+        style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+        }}
+      >
+        Reseteaza parola
+      </h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="password">
-          <Form.Label>New Password</Form.Label>
-          <Form.Control
-            type="password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <Form.Label>Parola noua</Form.Label>
+          <div className="password-input">
+            <Form.Control
+              type={showPassword ? 'text' : 'password'}
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span className="password-toggle" onClick={handlePasswordToggle}>
+              {showPassword ? <EyeSlashFill /> : <EyeFill />}
+            </span>
+          </div>
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="confirmPassword">
-          <Form.Label>Confirm New Password</Form.Label>
-          <Form.Control
-            type="password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
+          <Form.Label>Confirma parola noua</Form.Label>
+          <div className="password-input">
+            <Form.Control
+              type={showConfirmPassword ? 'text' : 'password'}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+            <span
+              className="password-toggle"
+              onClick={handleConfirmPasswordToggle}
+            >
+              {showConfirmPassword ? <EyeSlashFill /> : <EyeFill />}
+            </span>
+          </div>
         </Form.Group>
 
         <div className="mb-3">
-          <Button type="submit">Reset Password</Button>
+          <Button type="submit">Reseteaza</Button>
         </div>
       </Form>
     </Container>

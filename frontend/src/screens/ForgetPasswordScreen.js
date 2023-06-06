@@ -29,7 +29,9 @@ export default function ForgetPasswordScreen() {
       const { data } = await Axios.post('/api/users/forget-password', {
         email,
       });
-      toast.success(data.message);
+      toast.success(
+        'Verifica emailul pentru a accesa link-ul de resetare a parolei'
+      );
     } catch (err) {
       toast.error(getError(err));
     }
@@ -38,9 +40,9 @@ export default function ForgetPasswordScreen() {
   return (
     <Container className="small-container">
       <Helmet>
-        <title>Forget Password</title>
+        <title>Resetare parola</title>
       </Helmet>
-      <h1 className="my-3">Forget Password</h1>
+      <h2 className="my-3">Resetare parola</h2>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
@@ -52,7 +54,7 @@ export default function ForgetPasswordScreen() {
         </Form.Group>
 
         <div className="mb-3">
-          <Button type="submit">submit</Button>
+          <Button type="submit">Trimite email pentru resetarea parolei</Button>
         </div>
       </Form>
     </Container>
