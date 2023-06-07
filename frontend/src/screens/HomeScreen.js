@@ -67,14 +67,16 @@ function HomeScreen() {
     fetchData();
   }, []);
 
-  if (socket) {
-    const sk = socketIOClient(ENDPOINT);
-    setSocket(sk);
-    sk.emit('onLogin', {
-      _id: userInfo._id,
-      name: userInfo.name,
-      isAdmin: userInfo.isAdmin,
-    });
+  if (userInfo != null) {
+    if (!socket) {
+      const sk = socketIOClient(ENDPOINT);
+      setSocket(sk);
+      sk.emit('onLogin', {
+        _id: userInfo._id,
+        name: userInfo.name,
+        isAdmin: userInfo.isAdmin,
+      });
+    }
   }
 
   return (
