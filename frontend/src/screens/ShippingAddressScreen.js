@@ -21,6 +21,36 @@ export default function ShippingAddressScreen() {
     shippingAddress.postalCode || ''
   );
 
+  const calculateDistance = () => {
+    const lat1 = 44.44765998652836; // Latitudinea locației de bază
+    const lon1 = 26.096736171342823; // Longitudinea locației de bază
+    const lat2 = shippingAddress.location.lat; // Latitudinea adresei de livrare
+    const lon2 = shippingAddress.location.lng; // Longitudinea adresei de livrare
+
+    const R = 6371; // Raza Pământului în kilometri
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c;
+
+    const timeInHours = Math.floor(distance / 50); // Partea întreagă a timpului estimat în ore
+    const timeInMinutes = Math.round(((distance / 50) % 1) * 60); // Partea zecimală convertită în minute
+
+    return {
+      distance: distance.toFixed(2),
+      time: {
+        hours: timeInHours,
+        minutes: timeInMinutes,
+      },
+    };
+  };
+
   useEffect(() => {
     const shippingAddress = localStorage.getItem('shippingAddress');
     if (shippingAddress) {
@@ -159,7 +189,10 @@ export default function ShippingAddressScreen() {
               <div style={{ display: 'block', fontWeight: 'bold' }}>
                 {/* Latitudine: {shippingAddress.location.lat} <br />
                 Longitudine:{shippingAddress.location.lng} */}
-                <br /> Locatie adaugata
+                <br /> Locație adăugată
+                {shippingAddress.location.lat && (
+                  <div>Calcul distanță: {calculateDistance().distance} km</div>
+                )}
               </div>
             ) : (
               <div style={{ marginTop: '20px' }}>Fara locatie</div>

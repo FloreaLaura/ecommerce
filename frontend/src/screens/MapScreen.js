@@ -60,6 +60,7 @@ export default function MapScreen() {
   const onLoad = (map) => {
     mapRef.current = map;
   };
+
   const onIdle = () => {
     setLocation({
       lat: mapRef.current.center.lat(),
@@ -70,6 +71,7 @@ export default function MapScreen() {
   const onLoadPlaces = (place) => {
     placeRef.current = place;
   };
+
   const onPlacesChanged = () => {
     const place = placeRef.current.getPlaces()[0].geometry.location;
     setCenter({ lat: place.lat(), lng: place.lng() });
