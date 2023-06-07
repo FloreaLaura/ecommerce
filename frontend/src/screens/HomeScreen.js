@@ -67,29 +67,29 @@ function HomeScreen() {
     fetchData();
   }, []);
 
-  if (!socket) {
-    const sk = socketIOClient(ENDPOINT);
-    setSocket(sk);
-    sk.emit('onLogin', {
-      _id: userInfo._id,
-      name: userInfo.name,
-      isAdmin: userInfo.isAdmin,
-    });
-    sk.on('message', (data) => {
-      if (allSelectedUser._id === data._id) {
-        allMessages = [...allMessages, data];
-      } else {
-        const existUser = allUsers.find((user) => user._id === data._id);
-        if (existUser) {
-          allUsers = allUsers.map((user) =>
-            user._id === existUser._id ? { ...user, unread: true } : user
-          );
-          setUsers(allUsers);
-        }
-      }
-      setMessages(allMessages);
-    });
-  }
+  // if (!socket) {
+  //   const sk = socketIOClient(ENDPOINT);
+  //   setSocket(sk);
+  //   sk.emit('onLogin', {
+  //     _id: userInfo._id,
+  //     name: userInfo.name,
+  //     isAdmin: userInfo.isAdmin,
+  //   });
+  //   sk.on('message', (data) => {
+  //     if (allSelectedUser._id === data._id) {
+  //       allMessages = [...allMessages, data];
+  //     } else {
+  //       const existUser = allUsers.find((user) => user._id === data._id);
+  //       if (existUser) {
+  //         allUsers = allUsers.map((user) =>
+  //           user._id === existUser._id ? { ...user, unread: true } : user
+  //         );
+  //         setUsers(allUsers);
+  //       }
+  //     }
+  //     setMessages(allMessages);
+  //   });
+  // }
   return (
     <div>
       <Helmet>
