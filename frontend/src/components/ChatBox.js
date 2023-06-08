@@ -46,6 +46,7 @@ export default function ChatBox(props) {
     setSocket(sk);
   };
   const submitHandler = (e) => {
+  
     e.preventDefault();
     if (!messageBody.trim()) {
       alert('Scrie un mesaj.');
