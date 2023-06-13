@@ -62,10 +62,18 @@ function UserChatScreen(props) {
     }
   };
 
-  console.log(userInfo);
+  // console.log(userInfo);
 
   return (
     <div className="bigBox">
+      <h2
+        style={{
+          fontSize: '20px',
+          fontWeight: 'bold',
+        }}
+      >
+        Chat cu administratorul
+      </h2>
       <div className="chatbox">
         <div className="userChatBox">
           <div className="row position-relative"></div>
@@ -80,7 +88,7 @@ function UserChatScreen(props) {
           <div>
             <form onSubmit={submitHandler}>
               <input
-                className="scrieAicix"
+                className="writeHere"
                 value={messageBody}
                 onChange={(e) => setMessageBody(e.target.value)}
                 type="text"

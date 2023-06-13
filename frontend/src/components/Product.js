@@ -19,7 +19,7 @@ function Product(props) {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert('Ne cerem scuze. Produsul nu este in stoc.');
       return;
     }
     ctxDispatch({

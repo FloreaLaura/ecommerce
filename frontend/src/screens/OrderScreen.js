@@ -78,11 +78,13 @@ export default function OrderScreen() {
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   function createOrder(data, actions) {
+    const totalPrice = order.totalPrice;
+    const amountPrice = (totalPrice / 4.6).toFixed(2);
     return actions.order
       .create({
         purchase_units: [
           {
-            amount: { value: order.totalPrice },
+            amount: { value: amountPrice },
           },
         ],
       })
@@ -220,7 +222,10 @@ export default function OrderScreen() {
                   order.shippingAddress.location.lat && (
                     <a
                       target="_new"
-                      href={`https://maps.google.com?q=${order.shippingAddress.location.lat},${order.shippingAddress.location.lng}`}
+                      // href={`https://maps.google.com?q=${order.shippingAddress.location.lat},${order.shippingAddress.location.lng}`}
+                      href={`https://www.google.com/maps/dir/${44.44765998652836},${26.096736171342823}/${
+                        order.shippingAddress.location.lat
+                      },${order.shippingAddress.location.lng}`}
                     >
                       Vezi pe harta
                     </a>

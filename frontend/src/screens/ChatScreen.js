@@ -92,10 +92,36 @@ export default function ChatScreen() {
     socket.emit('onUserSelected', user);
   };
 
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   if (!messageBody.trim()) {
+  //     alert('Scrie un mesaj.');
+  //   } else {
+  //     allMessages = [
+  //       ...allMessages,
+  //       { body: messageBody, name: userInfo.name },
+  //     ];
+  //     setMessages(allMessages);
+  //     setMessageBody('');
+  //     setTimeout(() => {
+  //       socket.emit('onMessage', {
+  //         body: messageBody,
+  //         name: userInfo.name,
+  //         isAdmin: userInfo.isAdmin,
+  //         _id: selectedUser._id,
+  //       });
+  //     }, 1000);
+  //   }
+  // };
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (!messageBody.trim()) {
       alert('Scrie un mesaj.');
+    } else if (!selectedUser.online) {
+      alert(
+        'Utilizatorul nu este online. Nu se pot trimite mesaje catre acesta.'
+      );
     } else {
       allMessages = [
         ...allMessages,
