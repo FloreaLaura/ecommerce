@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomeScreen from './screens/HomeScreen';
@@ -41,7 +41,7 @@ import ContactScreen from './screens/ContactScreen';
 import MapScreen from './screens/MapScreen';
 import ChatScreen from './screens/ChatScreen';
 import ChatBox from './components/ChatBox';
-
+import UserChatScreen from './screens/UserChatScreen';
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { fullBox, cart, userInfo } = state;
@@ -65,6 +65,14 @@ function App() {
       }
     };
     fetchCategories();
+    const fetchOpenChat = async () => {
+      try {
+        const { data } = await axios.get(`/api/OpenChat`);
+        // setOpenChat(data);
+      } catch (err) {
+        toast.error(getError(err));
+      }
+    };
   }, []);
   return (
     <BrowserRouter>
@@ -369,11 +377,20 @@ function App() {
                   }
                 ></Route>
                 <Route path="/" element={<HomeScreen />} />
+                <Route
+                  path="/user/chat"
+                  element={
+                    // userInfo ? <UserChat userInfo={userInfo}/> :<Navigate to="/signin" />
+                    <ClientRoute>
+                      <UserChatScreen userInfo={userInfo} />
+                    </ClientRoute>
+                  }
+                />
               </Routes>
             </Container>
           </main>
         </div>
-        {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+        {/* {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />} */}
       </div>
     </BrowserRouter>
   );
