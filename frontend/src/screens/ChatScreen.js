@@ -20,7 +20,6 @@ export default function ChatScreen() {
   const [users, setUsers] = useState([]);
   const userSignin = useSelector((state) => state.userInfo);
   const userInfo = userSignin;
-  const [numarMesajeNecitite, setNumarMesajeNecitite] = useState(0);
 
   useEffect(() => {
     if (uiMessagesRef.current) {
