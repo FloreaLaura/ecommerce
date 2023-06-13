@@ -27,10 +27,20 @@ function Product(props) {
       payload: { ...item, quantity },
     });
   };
+  const remainingStock = product.countInStock;
+
   return (
     <Card className="rounded-card">
       <Link to={`/product/${product.slug}`}>
         <img src={product.image} className="card-img-top" alt={product.name} />
+        {remainingStock <= 5 && remainingStock > 0 && (
+          <div className="stock-label">
+            Ultimele {remainingStock} produse în stoc
+          </div>
+        )}
+        {remainingStock === 1 && (
+          <div className="stock-label">Ultimul produs rămas în stoc</div>
+        )}
       </Link>
       <Card.Body className="d-flex flex-column align-items-center justify-content-center">
         <Link to={`/product/${product.slug}`}>

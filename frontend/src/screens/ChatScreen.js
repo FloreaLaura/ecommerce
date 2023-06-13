@@ -20,6 +20,8 @@ export default function ChatScreen() {
   const [users, setUsers] = useState([]);
   const userSignin = useSelector((state) => state.userInfo);
   const userInfo = userSignin;
+  const [numarMesajeNecitite, setNumarMesajeNecitite] = useState(0);
+
   useEffect(() => {
     if (uiMessagesRef.current) {
       uiMessagesRef.current.scrollBy({
@@ -125,7 +127,7 @@ export default function ChatScreen() {
             .map((user) => (
               <li
                 key={user._id}
-                className={user._id === selectedUser._id ? '  selected' : '  '}
+                className={user._id === selectedUser._id ? 'selected' : ''}
               >
                 <button
                   className="block"
@@ -151,7 +153,7 @@ export default function ChatScreen() {
         ) : (
           <div>
             <div className="row">
-              <strong>Conversatie cu {selectedUser.name} </strong>
+              <strong>Conversatie cu {selectedUser.name}</strong>
             </div>
             <ul ref={uiMessagesRef}>
               {messages.length === 0 && <li>Fara mesaje.</li>}

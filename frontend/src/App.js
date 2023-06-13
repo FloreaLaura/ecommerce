@@ -44,7 +44,6 @@ import ChatBox from './components/ChatBox';
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { fullBox, cart, userInfo } = state;
-
   const signoutHandler = () => {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
@@ -141,9 +140,6 @@ function App() {
                       />
                       Contact
                     </Link>
-                    {/* <Link to="/admin/chat" className="nav-link">
-                      chat
-                    </Link> */}
                     {userInfo ? (
                       <NavDropdown
                         title={userInfo.name}
@@ -385,7 +381,9 @@ function App() {
           </main>
         </div>
         {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-        <div>All right reserved</div>{' '}
+        {/* {userInfo && !userInfo.isAdmin && (
+       
+        )} */}
       </div>
     </BrowserRouter>
   );

@@ -21,6 +21,7 @@ export default function MapScreen() {
   const [googleApiKey, setGoogleApiKey] = useState('');
   const [center, setCenter] = useState(defaultLocation);
   const [location, setLocation] = useState(center);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
   const mapRef = useRef(null);
   const placeRef = useRef(null);
@@ -42,6 +43,14 @@ export default function MapScreen() {
       });
     }
   };
+  const onMapClick = (event) => {
+    const clickedLocation = {
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+    };
+    setSelectedLocation(clickedLocation);
+  };
+
   useEffect(() => {
     const fetch = async () => {
       const { data } = await axios('/api/keys/google', {
@@ -87,8 +96,8 @@ export default function MapScreen() {
     ctxDispatch({
       type: 'SAVE_SHIPPING_ADDRESS_MAP_LOCATION',
       payload: {
-        lat: location.lat,
-        lng: location.lng,
+        lat: selectedLocation.lat,
+        lng: selectedLocation.lng,
         address: places[0].formatted_address,
         name: places[0].name,
         vicinity: places[0].vicinity,
@@ -108,6 +117,7 @@ export default function MapScreen() {
           zoom={15}
           onLoad={onLoad}
           onIdle={onIdle}
+          onClick={onMapClick}
         >
           <StandaloneSearchBox
             onLoad={onLoadPlaces}
@@ -124,7 +134,8 @@ export default function MapScreen() {
               </Button>
             </div>
           </StandaloneSearchBox>
-          <MarkerF position={location} onLoad={onMarkerLoad}></MarkerF>
+          {console.log(selectedLocation)}
+          <MarkerF position={selectedLocation} onLoad={onMarkerLoad}></MarkerF>
         </GoogleMap>
       </LoadScript>
     </div>
