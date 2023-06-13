@@ -28,6 +28,7 @@ import SearchScreen from './screens/SearchScreen';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardScreen from './screens/DashboardScreen';
 import AdminRoute from './components/AdminRoute';
+import ClientRoute from './components/ClientRoute';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
@@ -302,14 +303,6 @@ function App() {
                     </ProtectedRoute>
                   }
                 ></Route>
-                {/* <Route
-                  path="/admin/chat"
-                  element={
-                    <ProtectedRoute>
-                      <ChatScreen />
-                    </ProtectedRoute>
-                  }
-                /> */}
                 <Route
                   path="/shipping"
                   element={<ShippingAddressScreen />}
@@ -381,9 +374,6 @@ function App() {
           </main>
         </div>
         {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-        {/* {userInfo && !userInfo.isAdmin && (
-       
-        )} */}
       </div>
     </BrowserRouter>
   );
