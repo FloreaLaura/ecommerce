@@ -109,6 +109,8 @@ export default function ProfileScreen() {
             type="password"
             required
             onChange={(e) => setPassword(e.target.value)}
+            pattern=".{5,}"
+            title="Parola trebuie să conțină minim 5 caractere"
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="password">
@@ -117,6 +119,8 @@ export default function ProfileScreen() {
             required
             type="password"
             onChange={(e) => setConfirmPassword(e.target.value)}
+            pattern=".{5,}"
+            title="Parola trebuie să conțină minim 5 caractere"
           />
         </Form.Group>
         <div className="mb-3">

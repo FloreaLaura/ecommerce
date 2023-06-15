@@ -96,6 +96,8 @@ export default function SignupScreen() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              pattern=".{5,}"
+              title="Parola trebuie să conțină minim 5 caractere"
             />
             <span className="password-toggle" onClick={handlePasswordToggle}>
               {showPassword ? <EyeSlashFill /> : <EyeFill />}
@@ -112,6 +114,8 @@ export default function SignupScreen() {
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                pattern=".{5,}"
+                title="Parola trebuie să conțină minim 5 caractere"
               />
               <span
                 className="password-toggle"

@@ -109,6 +109,7 @@ export default function ShippingAddressScreen() {
       })
     );
     navigate('/map');
+    window.location.reload();
   }
 
   useEffect(() => {
@@ -187,11 +188,14 @@ export default function ShippingAddressScreen() {
             </Button>
             {shippingAddress.location && shippingAddress.location.lat ? (
               <div style={{ display: 'block', fontWeight: 'bold' }}>
-                Latitudine: {shippingAddress.location.lat} <br />
-                Longitudine:{shippingAddress.location.lng}
+                {/* Latitudine: {shippingAddress.location.lat} <br />
+                Longitudine:{shippingAddress.location.lng} */}
                 <br /> Locație adăugată
                 {shippingAddress.location.lat && (
-                  <div>Calcul distanță: {calculateDistance().distance} km</div>
+                  <div>
+                    Distanța de la furnizor la adresa aleasa:{' '}
+                    {calculateDistance().distance} km
+                  </div>
                 )}
               </div>
             ) : (

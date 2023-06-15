@@ -8,8 +8,7 @@ export default function ContactScreen() {
       <div className="contact-details">
         <p className="contact-info">Telefon: 0723456789</p>
         <p className="contact-info">
-          Adresa: Strada Naturii, nr. 1, Sector 3, Bucuresti (La aceasta adresa
-          nu se lucreaza cu publicul!, efectuam doar comenzi online)
+          Adresa: Strada Naturii, nr. 1, Sector 3, Bucuresti
         </p>
         <p className="contact-info">Email: contact@naturshop.ro</p>
       </div>

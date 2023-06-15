@@ -22,6 +22,7 @@ export default function MapScreen() {
   const [center, setCenter] = useState(defaultLocation);
   const [location, setLocation] = useState(center);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [isLocationSelected, setIsLocationSelected] = useState(false);
 
   const mapRef = useRef(null);
   const placeRef = useRef(null);
@@ -43,12 +44,14 @@ export default function MapScreen() {
       });
     }
   };
+
   const onMapClick = (event) => {
     const clickedLocation = {
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
     };
     setSelectedLocation(clickedLocation);
+    setIsLocationSelected(true);
   };
 
   useEffect(() => {
@@ -92,6 +95,11 @@ export default function MapScreen() {
   };
 
   const onConfirm = () => {
+    if (!isLocationSelected) {
+      toast.error('Alegeti adresa pentru a confirma.');
+      return;
+    }
+
     const places = placeRef.current.getPlaces() || [{}];
     ctxDispatch({
       type: 'SAVE_SHIPPING_ADDRESS_MAP_LOCATION',
@@ -107,6 +115,7 @@ export default function MapScreen() {
     toast.success('Locatia a fost selectata cu succes.');
     navigate('/shipping');
   };
+
   return (
     <div className="full-box">
       <LoadScript libraries={libs} googleMapsApiKey={googleApiKey}>
@@ -124,7 +133,11 @@ export default function MapScreen() {
             onPlacesChanged={onPlacesChanged}
           >
             <div className="map-input-box">
-              <input type="text" placeholder="Alegeti adresa dorita"></input>
+              <input
+                type="text"
+                placeholder="Alegeti adresa dorita"
+                style={{ display: 'none', opacity: 0 }}
+              ></input>
               <Button
                 type="button"
                 className="btnConfirmAdress"

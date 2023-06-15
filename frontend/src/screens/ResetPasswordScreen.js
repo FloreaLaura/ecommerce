@@ -77,6 +77,8 @@ export default function ResetPasswordScreen() {
               type={showPassword ? 'text' : 'password'}
               required
               onChange={(e) => setPassword(e.target.value)}
+              pattern=".{5,}"
+              title="Parola trebuie să conțină minim 5 caractere"
             />
             <span className="password-toggle" onClick={handlePasswordToggle}>
               {showPassword ? <EyeSlashFill /> : <EyeFill />}
@@ -91,6 +93,8 @@ export default function ResetPasswordScreen() {
               type={showConfirmPassword ? 'text' : 'password'}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
+              pattern=".{5,}"
+              title="Parola trebuie să conțină minim 5 caractere"
             />
             <span
               className="password-toggle"
