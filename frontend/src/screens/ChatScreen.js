@@ -105,7 +105,7 @@ export default function ChatScreen() {
     }
   }, [messages, socket, users]);
 
-  const selectUser = (user) => {
+  const selectUser = async (user) => {
     allSelectedUser = user;
     setSelectedUser(allSelectedUser);
     const existUser = allUsers.find((x) => x._id === user._id);

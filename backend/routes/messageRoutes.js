@@ -1,11 +1,12 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Message from '../models/messageModel.js';
-import { isAuth, isAdmin, mailgun, payOrderEmailTemplate } from '../utils.js';
+import { isAuth, isAdmin } from '../utils.js';
+import User from '../models/userModel.js';
 
-const messageRoute = express.Router();
+const messageRouter = express.Router();
 
-messageRoute.post(
+messageRouter.post(
   '/',
   isAuth,
   // const { body, name, isAdmin, userID } = req.body;
@@ -21,30 +22,74 @@ messageRoute.post(
     const message = await newMessage.save();
     res.status(201).send({ message: 'New Message Created', message });
   })
-
-  // newMessage
-  //   .save()
-  //   .then((savedMessage) => {
-  //     res.status(201).json(savedMessage);
-  //   })
-  //   .catch((error) => {
-  //     res.status(500).json({ error: error.message });
-  //   });
 );
 
-// Ruta pentru a citi toate mesajele
-messageRoute.get('/', (req, res) => {
-  Message.find()
-    .then((messages) => {
-      res.status(200).json(messages);
-    })
-    .catch((error) => {
-      res.status(500).json({ error: error.message });
-    });
-});
+messageRouter.get(
+  '/',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const messages = await Message.find()
+      // .populate('user', 'name')
+      .sort({ createdAt: 1 });
+    res.send(messages);
+  })
+);
+// messageRouter.get(
+//   '/mine',
+//   isAuth,
+//   expressAsyncHandler(async (req, res) => {
+//     const messages = await Message.find({ user: req.user._id }).sort({
+//       createdAt: 1,
+//     });
+//     res.send(messages);
+//   })
+// );
+
+// messageRouter.get(
+//   '/',
+//   isAuth,
+//   expressAsyncHandler(async (req, res) => {
+//     const { isAdmin, _id } = req.user;
+
+//     let messages;
+
+//     if (isAdmin) {
+//       messages = await Message.find({ isAdmin: true, selectedUserID: _id });
+//     } else {
+//       messages = await Message.find({ userID: _id });
+//     }
+
+//     res.send(messages);
+//   })
+// );
+
+// messageRouter.get(
+//   '/',
+//   isAuth,
+//   expressAsyncHandler(async (req, res) => {
+//     let query = {};
+
+//     if (!req.query.isAdmin) {
+//       query = {
+//         $or: [
+//           { isAdmin: false, userID: req.query.userID },
+//           { isAdmin: true, selectedUserID: req.query.userID },
+//         ],
+//       };
+//     } else {
+//       query = {
+//         isAdmin: true,
+//         selectedUserID: req.query.selectedUserID,
+//       };
+//     }
+
+//     const messages = await Message.find(query).sort({ createdAt: 1 });
+//     res.send(messages);
+//   })
+// );
 
 // Ruta pentru a actualiza un mesaj
-messageRoute.put('/:id', (req, res) => {
+messageRouter.put('/:id', (req, res) => {
   const { id } = req.params;
   const { name, body, isAdmin } = req.body;
 
@@ -58,7 +103,7 @@ messageRoute.put('/:id', (req, res) => {
 });
 
 // Ruta pentru a șterge un mesaj
-messageRoute.delete('/:id', (req, res) => {
+messageRouter.delete('/:id', (req, res) => {
   const { id } = req.params;
 
   Message.findByIdAndDelete(id)
@@ -70,4 +115,4 @@ messageRoute.delete('/:id', (req, res) => {
     });
 });
 
-export default messageRoute;
+export default messageRouter;
