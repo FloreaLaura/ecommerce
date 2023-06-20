@@ -109,7 +109,7 @@ export default function ShippingAddressScreen() {
       })
     );
     navigate('/map');
-    window.location.reload();
+    //  window.location.reload();
   }
 
   useEffect(() => {

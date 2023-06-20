@@ -1,13 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useReducer,
+  useContext,
+} from 'react';
 import socketIOClient from 'socket.io-client';
+import { Store } from '../Store';
+import axios from 'axios';
 
 const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0
     ? 'http://127.0.0.1:4000'
     : window.location.host;
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'CREATE_REQUEST':
+      return { ...state, loading: true };
+    case 'CREATE_SUCCESS':
+      return { ...state, loading: false };
+    case 'CREATE_FAIL':
+      return { ...state, loading: false };
+    default:
+      return state;
+  }
+};
+
 function UserChatScreen(props) {
-  let stop = 0;
   const { userInfo } = props;
   const [socket, setSocket] = useState(null);
   const uiMessagesRef = useRef(null);
@@ -19,6 +39,11 @@ function UserChatScreen(props) {
       body: 'Buna ziua, sunt aici pentru a va raspunde la intrebari.',
     },
   ]);
+  const [{ loading }, dispatch] = useReducer(reducer, {
+    loading: false,
+  });
+
+  const { state, dispatch: ctxDispatch } = useContext(Store);
 
   useEffect(() => {
     if (uiMessagesRef.current) {
@@ -44,25 +69,59 @@ function UserChatScreen(props) {
     }
   }, [messages, isOpen, socket]);
 
-  const submitHandler = (e) => {
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   if (!messageBody.trim()) {
+  //     alert('Scrie un mesaj.');
+  //   } else {
+  //     setMessages([...messages, { body: messageBody, name: userInfo.name }]);
+
+  //     setMessageBody('');
+  //     setTimeout(() => {
+  //       socket.emit('onMessage', {
+  //         body: messageBody,
+  //         name: userInfo.name,
+  //         isAdmin: userInfo.isAdmin,
+  //         _id: userInfo._id,
+  //       });
+  //     }, 1000);
+  //   }
+  // };
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (!messageBody.trim()) {
       alert('Scrie un mesaj.');
     } else {
       setMessages([...messages, { body: messageBody, name: userInfo.name }]);
       setMessageBody('');
-      setTimeout(() => {
-        socket.emit('onMessage', {
-          body: messageBody,
-          name: userInfo.name,
-          isAdmin: userInfo.isAdmin,
-          _id: userInfo._id,
-        });
-      }, 1000);
+
+      try {
+        dispatch({ type: 'CREATE_REQUEST' });
+        const { data } = await axios.post(
+          '/api/messages',
+          {
+            body: messageBody,
+            name: userInfo.name,
+            isAdmin: userInfo.isAdmin,
+            userID: userInfo._id,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+        // if (!response.ok) {
+        //   throw new Error('Eroare la trimiterea mesajului.');
+        // }
+        console.log('Mesajul a fost trimis cu succes:', data);
+        dispatch({ type: 'CREATE_SUCCESS' });
+      } catch (error) {
+        console.error('Eroare la trimiterea mesajului:', error);
+        dispatch({ type: 'CREATE_FAIL' });
+      }
     }
   };
-
-  // console.log(userInfo);
 
   return (
     <div className="bigBox">

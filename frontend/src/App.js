@@ -40,7 +40,6 @@ import ProductCreateScreen from './screens/ProductCreateScreen';
 import ContactScreen from './screens/ContactScreen';
 import MapScreen from './screens/MapScreen';
 import ChatScreen from './screens/ChatScreen';
-import ChatBox from './components/ChatBox';
 import UserChatScreen from './screens/UserChatScreen';
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);

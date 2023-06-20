@@ -14,6 +14,30 @@ import { toast } from 'react-toastify';
 const defaultLocation = { lat: 45.516, lng: -73.56 };
 const libs = ['places'];
 
+class LoadScriptOnlyIfNeeded extends LoadScript {
+  componentDidMount() {
+    const cleaningUp = true;
+    const isBrowser = typeof document !== 'undefined'; // require('@react-google-maps/api/src/utils/isbrowser')
+    const isAlreadyLoaded =
+      window.google &&
+      window.google.maps &&
+      document.querySelector('body.first-hit-completed'); // AJAX page loading system is adding this class the first time the app is loaded
+    if (!isAlreadyLoaded && isBrowser) {
+      // @ts-ignore
+      if (window.google && !cleaningUp) {
+        console.error('google api is already presented');
+        return;
+      }
+
+      this.isCleaningUp().then(this.injectScript);
+    }
+
+    if (isAlreadyLoaded) {
+      this.setState({ loaded: true });
+    }
+  }
+}
+
 export default function MapScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
@@ -56,7 +80,7 @@ export default function MapScreen() {
 
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await axios('/api/keys/google', {
+      const { data } = await axios.get('/api/keys/google', {
         headers: { Authorization: `BEARER ${userInfo.token}` },
       });
       setGoogleApiKey(data.key);
@@ -118,7 +142,7 @@ export default function MapScreen() {
 
   return (
     <div className="full-box">
-      <LoadScript libraries={libs} googleMapsApiKey={googleApiKey}>
+      <LoadScriptOnlyIfNeeded libraries={libs} googleMapsApiKey={googleApiKey}>
         <GoogleMap
           id="smaple-map"
           mapContainerStyle={{ height: '100%', width: '100%' }}
@@ -150,7 +174,7 @@ export default function MapScreen() {
           {console.log(selectedLocation)}
           <MarkerF position={selectedLocation} onLoad={onMarkerLoad}></MarkerF>
         </GoogleMap>
-      </LoadScript>
+      </LoadScriptOnlyIfNeeded>
     </div>
   );
 }

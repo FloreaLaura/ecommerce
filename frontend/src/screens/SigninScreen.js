@@ -80,8 +80,8 @@ export default function SigninScreen() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              pattern=".{5,}"
-              title="Parola trebuie să conțină minim 5 caractere"
+              // pattern=".{5,}"
+              // title="Parola trebuie să conțină minim 5 caractere"
             />
             <span className="password-toggle" onClick={handlePasswordToggle}>
               {showPassword ? <EyeSlashFill /> : <EyeFill />}
