@@ -28,67 +28,11 @@ messageRouter.get(
   '/',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const messages = await Message.find()
-      // .populate('user', 'name')
-      .sort({ createdAt: 1 });
+    const messages = await Message.find().sort({ createdAt: 1 });
     res.send(messages);
   })
 );
-// messageRouter.get(
-//   '/mine',
-//   isAuth,
-//   expressAsyncHandler(async (req, res) => {
-//     const messages = await Message.find({ user: req.user._id }).sort({
-//       createdAt: 1,
-//     });
-//     res.send(messages);
-//   })
-// );
 
-// messageRouter.get(
-//   '/',
-//   isAuth,
-//   expressAsyncHandler(async (req, res) => {
-//     const { isAdmin, _id } = req.user;
-
-//     let messages;
-
-//     if (isAdmin) {
-//       messages = await Message.find({ isAdmin: true, selectedUserID: _id });
-//     } else {
-//       messages = await Message.find({ userID: _id });
-//     }
-
-//     res.send(messages);
-//   })
-// );
-
-// messageRouter.get(
-//   '/',
-//   isAuth,
-//   expressAsyncHandler(async (req, res) => {
-//     let query = {};
-
-//     if (!req.query.isAdmin) {
-//       query = {
-//         $or: [
-//           { isAdmin: false, userID: req.query.userID },
-//           { isAdmin: true, selectedUserID: req.query.userID },
-//         ],
-//       };
-//     } else {
-//       query = {
-//         isAdmin: true,
-//         selectedUserID: req.query.selectedUserID,
-//       };
-//     }
-
-//     const messages = await Message.find(query).sort({ createdAt: 1 });
-//     res.send(messages);
-//   })
-// );
-
-// Ruta pentru a actualiza un mesaj
 messageRouter.put('/:id', (req, res) => {
   const { id } = req.params;
   const { name, body, isAdmin } = req.body;
@@ -102,7 +46,6 @@ messageRouter.put('/:id', (req, res) => {
     });
 });
 
-// Ruta pentru a șterge un mesaj
 messageRouter.delete('/:id', (req, res) => {
   const { id } = req.params;
 

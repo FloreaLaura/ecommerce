@@ -10,9 +10,10 @@ import { useSelector } from 'react-redux';
 import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
 import axios from 'axios';
+import { getError } from '../utils';
 
 let allUsers = [];
-let allMessages = [];
+// let allMessages = [];
 let allSelectedUser = {};
 const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0
@@ -27,6 +28,12 @@ const reducer = (state, action) => {
       return { ...state, loading: false };
     case 'CREATE_FAIL':
       return { ...state, loading: false };
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, messages: action.payload, loading: false };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
@@ -44,16 +51,51 @@ export default function ChatScreen() {
   const [{ loading }, dispatch] = useReducer(reducer, {
     loading: false,
   });
+  const allMessagesRef = useRef([]);
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
 
-  useEffect(() => {
-    if (uiMessagesRef.current) {
-      uiMessagesRef.current.scrollBy({
-        top: uiMessagesRef.current.clientHeight,
-        left: 0,
-        behavior: 'smooth',
+  const fetchMessages = async () => {
+    dispatch({ type: 'FETCH_REQUEST' });
+    try {
+      const queryParams = {
+        selectedUserID: selectedUser._id,
+      };
+
+      const response = await axios.get('/api/messages', {
+        headers: {
+          authorization: `Bearer ${userInfo.token}`,
+        },
+        params: queryParams,
       });
+
+      const filteredMessages = response.data.filter((msg) => {
+        if (msg.isAdmin) {
+          return msg.selectedUserID === selectedUser._id;
+        } else {
+          return msg.userID === selectedUser._id;
+        }
+      });
+
+      setMessages(filteredMessages);
+      dispatch({ type: 'FETCH_SUCCESS' });
+      allMessagesRef.current = filteredMessages;
+    } catch (error) {
+      dispatch({ type: 'FETCH_FAIL', payload: getError(error) });
+    }
+  };
+
+  useEffect(() => {
+    fetchMessages();
+    if (uiMessagesRef.current) {
+      // uiMessagesRef.current.scrollBy({
+      //   top: uiMessagesRef.current.clientHeight,
+      //   left: 0,
+      //   behavior: 'smooth',
+      // });
+      const messagesContainer = uiMessagesRef.current;
+      const lastMessage = messagesContainer.lastElementChild;
+      lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
     if (userInfo != null) {
       if (!socket) {
@@ -67,7 +109,9 @@ export default function ChatScreen() {
 
         sk.on('message', (data) => {
           if (allSelectedUser._id === data._id) {
-            allMessages = [...allMessages, data];
+            // allMessages = [...allMessages, data];
+            allMessagesRef.current = [...allMessagesRef.current, data];
+            setMessages(allMessagesRef.current); // Actualizează ref-ul cu mesajele primite
           } else {
             const existUser = allUsers.find((user) => user._id === data._id);
             if (existUser) {
@@ -77,7 +121,7 @@ export default function ChatScreen() {
               setUsers(allUsers);
             }
           }
-          setMessages(allMessages);
+          // setMessages(allMessages);
         });
         sk.on('updateUser', (updatedUser) => {
           const existUser = allUsers.find(
@@ -98,12 +142,14 @@ export default function ChatScreen() {
           setUsers(allUsers);
         });
         sk.on('selectUser', (user) => {
-          allMessages = user.messages;
-          setMessages(allMessages);
+          // allMessages = user.messages;
+          // setMessages(allMessages);
+          allMessagesRef.current = user.messages; // Actualizează ref-ul cu mesajele utilizatorului selectat
+          setMessages(allMessagesRef.current);
         });
       }
     }
-  }, [messages, socket, users]);
+  }, [socket, users, selectedUser._id]);
 
   const selectUser = async (user) => {
     allSelectedUser = user;
@@ -127,10 +173,15 @@ export default function ChatScreen() {
         'Utilizatorul nu este online. Nu se pot trimite mesaje catre acesta.'
       );
     } else {
-      allMessages = [
-        ...allMessages,
+      // allMessages = [
+      //   ...allMessages,
+      //   { body: messageBody, name: userInfo.name },
+      // ];
+      allMessagesRef.current = [
+        ...allMessagesRef.current,
         { body: messageBody, name: userInfo.name },
-      ];
+      ]; // Actualizează ref-ul cu noul mesaj
+
       try {
         dispatch({ type: 'CREATE_REQUEST' });
         const { data } = await axios.post(
@@ -155,7 +206,7 @@ export default function ChatScreen() {
         console.error('Eroare la trimiterea mesajului:', error);
         dispatch({ type: 'CREATE_FAIL' });
       }
-      setMessages(allMessages);
+      setMessages(allMessagesRef.current);
       setMessageBody('');
       setTimeout(() => {
         socket.emit('onMessage', {
@@ -166,6 +217,7 @@ export default function ChatScreen() {
         });
       }, 1000);
     }
+    fetchMessages();
   };
 
   return (
@@ -208,9 +260,17 @@ export default function ChatScreen() {
             <div className="row">
               <strong>Conversatie cu {selectedUser.name}</strong>
             </div>
-            <ul ref={uiMessagesRef}>
+            {/* <ul ref={uiMessagesRef}>
               {messages.length === 0 && <li>Fara mesaje.</li>}
               {messages.map((msg, index) => (
+                <li key={index}>
+                  <strong>{`${msg.name}: `}</strong> {msg.body}
+                </li>
+              ))}
+            </ul> */}
+            <ul ref={uiMessagesRef}>
+              {messages.length === 0 && <li>Fara mesaje.</li>}
+              {messages.reverse().map((msg, index) => (
                 <li key={index}>
                   <strong>{`${msg.name}: `}</strong> {msg.body}
                 </li>
