@@ -1,7 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useReducer,
+  useContext,
+} from 'react';
 import socketIOClient from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import MessageBox from '../components/MessageBox';
+import { Store } from '../Store';
+import axios from 'axios';
 
 let allUsers = [];
 let allMessages = [];
@@ -10,6 +18,19 @@ const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0
     ? 'http://127.0.0.1:4000'
     : window.location.host;
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'CREATE_REQUEST':
+      return { ...state, loading: true };
+    case 'CREATE_SUCCESS':
+      return { ...state, loading: false };
+    case 'CREATE_FAIL':
+      return { ...state, loading: false };
+    default:
+      return state;
+  }
+};
 
 export default function ChatScreen() {
   const [selectedUser, setSelectedUser] = useState({});
@@ -20,6 +41,11 @@ export default function ChatScreen() {
   const [users, setUsers] = useState([]);
   const userSignin = useSelector((state) => state.userInfo);
   const userInfo = userSignin;
+  const [{ loading }, dispatch] = useReducer(reducer, {
+    loading: false,
+  });
+
+  const { state, dispatch: ctxDispatch } = useContext(Store);
 
   useEffect(() => {
     if (uiMessagesRef.current) {
@@ -92,29 +118,7 @@ export default function ChatScreen() {
     socket.emit('onUserSelected', user);
   };
 
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   if (!messageBody.trim()) {
-  //     alert('Scrie un mesaj.');
-  //   } else {
-  //     allMessages = [
-  //       ...allMessages,
-  //       { body: messageBody, name: userInfo.name },
-  //     ];
-  //     setMessages(allMessages);
-  //     setMessageBody('');
-  //     setTimeout(() => {
-  //       socket.emit('onMessage', {
-  //         body: messageBody,
-  //         name: userInfo.name,
-  //         isAdmin: userInfo.isAdmin,
-  //         _id: selectedUser._id,
-  //       });
-  //     }, 1000);
-  //   }
-  // };
-
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (!messageBody.trim()) {
       alert('Scrie un mesaj.');
@@ -127,6 +131,30 @@ export default function ChatScreen() {
         ...allMessages,
         { body: messageBody, name: userInfo.name },
       ];
+      try {
+        dispatch({ type: 'CREATE_REQUEST' });
+        const { data } = await axios.post(
+          '/api/messages',
+          {
+            body: messageBody,
+            name: userInfo.name,
+            isAdmin: userInfo.isAdmin,
+            userID: userInfo._id,
+            selectedUserID: selectedUser._id,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+
+        console.log('Mesajul a fost trimis cu succes:', data);
+        dispatch({ type: 'CREATE_SUCCESS' });
+      } catch (error) {
+        console.error('Eroare la trimiterea mesajului:', error);
+        dispatch({ type: 'CREATE_FAIL' });
+      }
       setMessages(allMessages);
       setMessageBody('');
       setTimeout(() => {

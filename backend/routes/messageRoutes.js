@@ -15,6 +15,7 @@ messageRoute.post(
       name: req.body.name,
       isAdmin: req.body.isAdmin,
       userID: req.body.userID,
+      selectedUserID: req.body.selectedUserID,
     });
 
     const message = await newMessage.save();

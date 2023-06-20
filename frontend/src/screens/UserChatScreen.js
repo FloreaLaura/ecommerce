@@ -69,24 +69,6 @@ function UserChatScreen(props) {
     }
   }, [messages, isOpen, socket]);
 
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   if (!messageBody.trim()) {
-  //     alert('Scrie un mesaj.');
-  //   } else {
-  //     setMessages([...messages, { body: messageBody, name: userInfo.name }]);
-
-  //     setMessageBody('');
-  //     setTimeout(() => {
-  //       socket.emit('onMessage', {
-  //         body: messageBody,
-  //         name: userInfo.name,
-  //         isAdmin: userInfo.isAdmin,
-  //         _id: userInfo._id,
-  //       });
-  //     }, 1000);
-  //   }
-  // };
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!messageBody.trim()) {
@@ -111,9 +93,6 @@ function UserChatScreen(props) {
             },
           }
         );
-        // if (!response.ok) {
-        //   throw new Error('Eroare la trimiterea mesajului.');
-        // }
         console.log('Mesajul a fost trimis cu succes:', data);
         dispatch({ type: 'CREATE_SUCCESS' });
       } catch (error) {
