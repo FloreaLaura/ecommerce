@@ -88,14 +88,11 @@ export default function ChatScreen() {
   useEffect(() => {
     fetchMessages();
     if (uiMessagesRef.current) {
-      // uiMessagesRef.current.scrollBy({
-      //   top: uiMessagesRef.current.clientHeight,
-      //   left: 0,
-      //   behavior: 'smooth',
-      // });
-      const messagesContainer = uiMessagesRef.current;
-      const lastMessage = messagesContainer.lastElementChild;
-      lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      uiMessagesRef.current.scrollBy({
+        bottom: uiMessagesRef.current.clientHeight,
+        left: 0,
+        behavior: 'smooth',
+      });
     }
     if (userInfo != null) {
       if (!socket) {
@@ -258,19 +255,13 @@ export default function ChatScreen() {
         ) : (
           <div>
             <div className="row">
-              <strong>Conversatie cu {selectedUser.name}</strong>
+              <strong>Conversație cu {selectedUser.name}</strong>
+              <small>(Mesajele dispar automat după 12 ore)</small>
             </div>
-            {/* <ul ref={uiMessagesRef}>
-              {messages.length === 0 && <li>Fara mesaje.</li>}
-              {messages.map((msg, index) => (
-                <li key={index}>
-                  <strong>{`${msg.name}: `}</strong> {msg.body}
-                </li>
-              ))}
-            </ul> */}
+
             <ul ref={uiMessagesRef}>
               {messages.length === 0 && <li>Fara mesaje.</li>}
-              {messages.reverse().map((msg, index) => (
+              {messages.map((msg, index) => (
                 <li key={index}>
                   <strong>{`${msg.name}: `}</strong> {msg.body}
                 </li>

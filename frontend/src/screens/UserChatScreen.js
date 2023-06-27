@@ -44,6 +44,7 @@ function UserChatScreen(props) {
     loading: false,
     messages: [],
   });
+  const chatboxRef = useRef(null);
 
   const filteredMessages = messages.filter((msg) => {
     if (msg.isAdmin) {
@@ -95,13 +96,19 @@ function UserChatScreen(props) {
   };
 
   useEffect(() => {
+    const chatboxElement = chatboxRef.current;
+
     if (uiMessagesRef.current) {
       uiMessagesRef.current.scrollBy({
-        top: uiMessagesRef.current.clientHeight,
+        bottom: uiMessagesRef.current.clientHeight,
         left: 0,
         behavior: 'smooth',
       });
     }
+    // if (chatboxElement) {
+    //   const chatboxElement = chatboxRef.current;
+    //   chatboxElement.lastElementChild.scrollIntoView({ behavior: 'smooth' });
+    // }
     if (!socket) {
       const sk = socketIOClient(ENDPOINT);
       setSocket(sk);
@@ -185,7 +192,9 @@ function UserChatScreen(props) {
       <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>
         Chat cu administratorul
       </h2>
-      <div className="chatbox">
+      <small>(Mesajele dispar automat după 12 ore)</small>
+
+      <div className="chatbox" ref={chatboxRef}>
         <div className="userChatBox">
           <div className="row position-relative"></div>
           <ul ref={uiMessagesRef}>

@@ -17,21 +17,18 @@ const libs = ['places'];
 class LoadScriptOnlyIfNeeded extends LoadScript {
   componentDidMount() {
     const cleaningUp = true;
-    const isBrowser = typeof document !== 'undefined'; // require('@react-google-maps/api/src/utils/isbrowser')
+    const isBrowser = typeof document !== 'undefined';
     const isAlreadyLoaded =
       window.google &&
       window.google.maps &&
-      document.querySelector('body.first-hit-completed'); // AJAX page loading system is adding this class the first time the app is loaded
+      document.querySelector('body.first-hit-completed');
     if (!isAlreadyLoaded && isBrowser) {
-      // @ts-ignore
       if (window.google && !cleaningUp) {
-        console.error('google api is already presented');
+        // console.error('google api is already presented');
         return;
       }
-
       this.isCleaningUp().then(this.injectScript);
     }
-
     if (isAlreadyLoaded) {
       this.setState({ loaded: true });
     }
@@ -139,29 +136,64 @@ export default function MapScreen() {
     toast.success('Locatia a fost selectata cu succes.');
     navigate('/shipping');
   };
+  // const onConfirm = () => {
+  //   if (!isLocationSelected) {
+  //     toast.error('Alegeti adresa pentru a confirma.');
+  //     return;
+  //   }
+
+  //   ctxDispatch({
+  //     type: 'SAVE_SHIPPING_ADDRESS_MAP_LOCATION',
+  //     payload: {
+  //       lat: selectedLocation.lat,
+  //       lng: selectedLocation.lng,
+  //       address: 'Adresa dorită',
+  //       name: 'Nume locație',
+  //       vicinity: 'Vecinătate',
+  //       googleAddressId: 'ID Google adresă',
+  //     },
+  //   });
+  //   toast.success('Locatia a fost selectata cu succes.');
+  //   navigate('/shipping');
+  // };
 
   return (
     <div className="full-box">
-      <LoadScriptOnlyIfNeeded libraries={libs} googleMapsApiKey={googleApiKey}>
-        <GoogleMap
-          id="smaple-map"
-          mapContainerStyle={{ height: '100%', width: '100%' }}
-          center={center}
-          zoom={15}
-          onLoad={onLoad}
-          onIdle={onIdle}
-          onClick={onMapClick}
+      {googleApiKey && (
+        <LoadScriptOnlyIfNeeded
+          async
+          libraries={libs}
+          googleMapsApiKey={googleApiKey}
         >
-          <StandaloneSearchBox
-            onLoad={onLoadPlaces}
-            onPlacesChanged={onPlacesChanged}
+          <GoogleMap
+            id="smaple-map"
+            mapContainerStyle={{ height: '100%', width: '100%' }}
+            center={center}
+            zoom={15}
+            onLoad={onLoad}
+            onIdle={onIdle}
+            onClick={onMapClick}
           >
-            <div className="map-input-box">
-              <input
-                type="text"
-                placeholder="Alegeti adresa dorita"
-                style={{ display: 'none', opacity: 0 }}
-              ></input>
+            <StandaloneSearchBox
+              onLoad={onLoadPlaces}
+              onPlacesChanged={onPlacesChanged}
+            >
+              <div className="map-input-box">
+                <input
+                  type="text"
+                  placeholder="Alegeti adresa dorita"
+                  // style={{ display: 'none', opacity: 0 }}
+                ></input>
+                <Button
+                  type="button"
+                  className="btnConfirmAdress"
+                  onClick={onConfirm}
+                >
+                  Confirm
+                </Button>
+              </div>
+            </StandaloneSearchBox>
+            {/* <div className="map-input-box">
               <Button
                 type="button"
                 className="btnConfirmAdress"
@@ -169,12 +201,15 @@ export default function MapScreen() {
               >
                 Confirm
               </Button>
-            </div>
-          </StandaloneSearchBox>
-          {console.log(selectedLocation)}
-          <MarkerF position={selectedLocation} onLoad={onMarkerLoad}></MarkerF>
-        </GoogleMap>
-      </LoadScriptOnlyIfNeeded>
+            </div> */}
+
+            <MarkerF
+              position={selectedLocation}
+              onLoad={onMarkerLoad}
+            ></MarkerF>
+          </GoogleMap>
+        </LoadScriptOnlyIfNeeded>
+      )}
     </div>
   );
 }

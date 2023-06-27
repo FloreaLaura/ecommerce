@@ -28,7 +28,12 @@ messageRouter.get(
   '/',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const messages = await Message.find().sort({ createdAt: 1 });
+    const twelveHoursAgo = new Date();
+    twelveHoursAgo.setHours(twelveHoursAgo.getHours() - 12);
+
+    const messages = await Message.find({
+      createdAt: { $gt: twelveHoursAgo },
+    }).sort({ createdAt: 1 });
     res.send(messages);
   })
 );

@@ -96,20 +96,34 @@ export default function ShippingAddressScreen() {
     navigate('/payment');
   };
 
+  // function navigateonMap() {
+  //   localStorage.setItem(
+  //     'shippingAddress',
+  //     JSON.stringify({
+  //       fullName,
+  //       address,
+  //       city,
+  //       postalCode,
+  //       country,
+  //       location: shippingAddress.location,
+  //     })
+  //   );
+  //   navigate('/map');
+  //   //  window.location.reload();
+  // }
   function navigateonMap() {
     localStorage.setItem(
       'shippingAddress',
       JSON.stringify({
-        fullName,
-        address,
-        city,
-        postalCode,
-        country,
+        fullName: fullName,
+        address: address,
+        city: city,
+        postalCode: postalCode,
+        country: country,
         location: shippingAddress.location,
       })
     );
     navigate('/map');
-    //  window.location.reload();
   }
 
   useEffect(() => {
@@ -191,12 +205,12 @@ export default function ShippingAddressScreen() {
                 {/* Latitudine: {shippingAddress.location.lat} <br />
                 Longitudine:{shippingAddress.location.lng} */}
                 <br /> Locație adăugată
-                {shippingAddress.location.lat && (
+                {/* {shippingAddress.location.lat && (
                   <div>
                     Distanța de la furnizor la adresa aleasa:{' '}
                     {calculateDistance().distance} km
                   </div>
-                )}
+                )} */}
               </div>
             ) : (
               <div style={{ marginTop: '20px' }}>Fara locatie</div>

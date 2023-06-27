@@ -41,6 +41,8 @@ import ContactScreen from './screens/ContactScreen';
 import MapScreen from './screens/MapScreen';
 import ChatScreen from './screens/ChatScreen';
 import UserChatScreen from './screens/UserChatScreen';
+import { Helmet } from 'react-helmet-async';
+
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { fullBox, cart, userInfo } = state;
@@ -379,7 +381,6 @@ function App() {
                 <Route
                   path="/user/chat"
                   element={
-                    // userInfo ? <UserChat userInfo={userInfo}/> :<Navigate to="/signin" />
                     <ClientRoute>
                       <UserChatScreen userInfo={userInfo} />
                     </ClientRoute>
@@ -389,7 +390,18 @@ function App() {
             </Container>
           </main>
         </div>
-        {/* {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />} */}
+        {console.log(typeof userInfo)}
+        {userInfo === null ||
+          (!userInfo.isAdmin && (
+            <Helmet>
+              <script
+                src="https://cdn.cai.tools.sap/webchat/webchat.js"
+                channelid="f103cccb-7ac5-4f89-b64f-af18a05d5e95"
+                token="cdf440393e76e3f4ff975c183ef78d55"
+                id="cai-webchat"
+              ></script>
+            </Helmet>
+          ))}
       </div>
     </BrowserRouter>
   );
