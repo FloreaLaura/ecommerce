@@ -390,18 +390,18 @@ function App() {
             </Container>
           </main>
         </div>
-        {console.log(typeof userInfo)}
-        {userInfo === null ||
-          (!userInfo.isAdmin && (
-            <Helmet>
-              <script
-                src="https://cdn.cai.tools.sap/webchat/webchat.js"
-                channelid="f103cccb-7ac5-4f89-b64f-af18a05d5e95"
-                token="cdf440393e76e3f4ff975c183ef78d55"
-                id="cai-webchat"
-              ></script>
-            </Helmet>
-          ))}
+        {userInfo === null || !userInfo.isAdmin ? (
+          <Helmet>
+            <script
+              src="https://cdn.cai.tools.sap/webchat/webchat.js"
+              channelid="f103cccb-7ac5-4f89-b64f-af18a05d5e95"
+              token="cdf440393e76e3f4ff975c183ef78d55"
+              id="cai-webchat"
+            ></script>
+          </Helmet>
+        ) : (
+          <text></text>
+        )}
       </div>
     </BrowserRouter>
   );
