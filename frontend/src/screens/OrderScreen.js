@@ -248,6 +248,7 @@ export default function OrderScreen() {
               </Card.Text>
               {order.isPaid ? (
                 <MessageBox variant="success">
+                  {/* Platit */}
                   Platit la {order.paidAt.substring(0, 10)}
                 </MessageBox>
               ) : (

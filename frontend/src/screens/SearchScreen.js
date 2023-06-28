@@ -36,16 +36,16 @@ const reducer = (state, action) => {
 
 const prices = [
   {
-    name: '1 - 100',
-    value: '1-100',
+    name: '1 - 50',
+    value: '1-50',
   },
   {
-    name: '100 - 200',
-    value: '100-200',
+    name: '50 - 100',
+    value: '50-100',
   },
   {
-    name: '>200',
-    value: '200-1000',
+    name: '>100',
+    value: '100-1000',
   },
 ];
 
@@ -78,7 +78,7 @@ export const ratings = [
 export default function SearchScreen() {
   const navigate = useNavigate();
   const { search } = useLocation();
-  const sp = new URLSearchParams(search); // /search?category=Shirts
+  const sp = new URLSearchParams(search);
   const category = sp.get('category') || 'all';
   const query = sp.get('query') || 'all';
   const price = sp.get('price') || 'all';
@@ -222,7 +222,7 @@ export default function SearchScreen() {
                       r.rating === rating ? 'text-bold' : ''
                     }`}
                   >
-                    <Rating caption={'stele '} rating={r.rating}></Rating>
+                    <Rating caption={'stele'} rating={r.rating}></Rating>
                   </Link>
                 </li>
               ))}
@@ -247,11 +247,11 @@ export default function SearchScreen() {
               <Row className="justify-content-between mb-3">
                 <Col md={6}>
                   <div>
-                    {countProducts === 0 ? 'No' : countProducts} Rezultate
+                    {countProducts === 0 ? 'Fara' : countProducts} Rezultate
                     {query !== 'all' && ' : ' + query}
                     {category !== 'all' && ' : ' + category}
-                    {price !== 'all' && ' : Price ' + price}
-                    {rating !== 'all' && ' : Rating ' + rating + ' & up'}
+                    {price !== 'all' && ' : Pret ' + price}
+                    {rating !== 'all' && ' : Rating minim ' + rating}
                     {query !== 'all' ||
                     category !== 'all' ||
                     rating !== 'all' ||

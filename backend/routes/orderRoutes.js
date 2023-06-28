@@ -128,7 +128,9 @@ orderRouter.put(
       order.isDelivered = true;
       order.deliveredAt = Date.now();
       order.isPaid = true;
-      order.paidAt = Date.now();
+      if (!order.paidAt) {
+        order.paidAt = Date.now();
+      }
       await order.save();
 
       mailgun()

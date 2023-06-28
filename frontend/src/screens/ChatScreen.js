@@ -13,7 +13,6 @@ import axios from 'axios';
 import { getError } from '../utils';
 
 let allUsers = [];
-// let allMessages = [];
 let allSelectedUser = {};
 const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0
@@ -223,6 +222,7 @@ export default function ChatScreen() {
         {users.filter((x) => x._id !== userInfo._id).length === 0 && (
           <MessageBox>Nu sunt utilizatori conectati</MessageBox>
         )}
+
         <ul>
           {users
             .filter((x) => x._id !== userInfo._id)
