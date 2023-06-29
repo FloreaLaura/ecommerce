@@ -84,7 +84,10 @@ export default function SearchScreen() {
   const price = sp.get('price') || 'all';
   const rating = sp.get('rating') || 'all';
   const order = sp.get('order') || 'newest';
-  const page = sp.get('page') || 1;
+  // const page = sp.get('page') || 1;
+  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(Number(sp.get('page')) || 1);
+  const [totalPages, setTotalPages] = useState(0);
 
   const [{ loading, error, products, pages, countProducts }, dispatch] =
     useReducer(reducer, {
@@ -99,6 +102,7 @@ export default function SearchScreen() {
           `/api/products/search?page=${page}&query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        setTotalPages(data.pages);
       } catch (err) {
         dispatch({
           type: 'FETCH_FAIL',
@@ -133,6 +137,12 @@ export default function SearchScreen() {
       skipPathname ? '' : '/search?'
     }category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&order=${sortOrder}&page=${filterPage}`;
   };
+
+  const goToPage = (newPage) => {
+    // Validate and update the current page
+    setPage(newPage);
+  };
+
   return (
     <div>
       <Helmet>
@@ -295,9 +305,8 @@ export default function SearchScreen() {
                   </Col>
                 ))}
               </Row>
-
               <div>
-                {[...Array(pages).keys()].map((x) => (
+                {/* {[...Array(pages).keys()].map((x) => (
                   <LinkContainer
                     key={x + 1}
                     className="mx-1"
@@ -305,15 +314,32 @@ export default function SearchScreen() {
                       pathname: '/search',
                       seacrh: getFilterUrl({ page: x + 1 }, true),
                     }}
-                  >
-                    <Button
+                  > */}
+                {/* <Button
                       className={Number(page) === x + 1 ? 'text-bold' : ''}
                       variant="light"
                     >
                       {x + 1}
-                    </Button>
-                  </LinkContainer>
-                ))}
+                    </Button> */}
+                <div>
+                  <button
+                    className="pagination-button"
+                    onClick={() => goToPage(page - 1)}
+                    disabled={page === 1}
+                  >
+                    Pagina anterioară
+                  </button>
+                  <button
+                    className="pagination-button"
+                    onClick={() => goToPage(page + 1)}
+                    disabled={page === totalPages}
+                  >
+                    Pagina următoare
+                  </button>
+                </div>
+
+                {/* </LinkContainer> */}
+                {/* ))} */}
               </div>
             </>
           )}

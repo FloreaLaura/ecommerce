@@ -21,6 +21,37 @@ export default function SigninScreen() {
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
+  const [isPageRefreshing, setIsPageRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isPageRefreshing) {
+      navigate(redirect || '/');
+    }
+  }, [isPageRefreshing, navigate, redirect]);
+
+  const handlePageRefresh = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 50);
+  };
+
+  // const submitHandler = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const { data } = await Axios.post('/api/users/signin', {
+  //       email,
+  //       password,
+  //     });
+  //     ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+  //     localStorage.setItem('userInfo', JSON.stringify(data));
+  //     navigate(redirect || '/');
+  //     window.location.reload();
+  //   } catch (err) {
+  //     toast.error(getError(err));
+  //   }
+  // };
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -30,8 +61,7 @@ export default function SigninScreen() {
       });
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
-      navigate(redirect || '/');
-      // window.location.reload();
+      handlePageRefresh();
     } catch (err) {
       toast.error(getError(err));
     }

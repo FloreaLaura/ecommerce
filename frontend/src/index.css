@@ -592,3 +592,25 @@ button.thumbnail {
   font-size: 12px;
   border-radius: 5px;
 }
+
+/* navigare intre pagini*/
+.pagination-button {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4c915d;
+  color: #171616;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination-button:hover {
+  background-color: #345d3e;
+}
+
+.pagination-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

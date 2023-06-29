@@ -400,7 +400,7 @@ function App() {
             ></script>
           </Helmet>
         ) : (
-          <text></text>
+          <div></div>
         )}
       </div>
     </BrowserRouter>
