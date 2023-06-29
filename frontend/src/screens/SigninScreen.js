@@ -34,7 +34,7 @@ export default function SigninScreen() {
     setIsLoading(true);
     setTimeout(() => {
       window.location.reload();
-    }, 50);
+    }, 10);
   };
 
   // const submitHandler = async (e) => {

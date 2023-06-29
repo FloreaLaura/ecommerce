@@ -271,6 +271,7 @@ export default function ProductEditScreen() {
               <option value="Arom Science">Arom Science</option>
               <option value="Parapharm">Parapharm</option>
               <option value="PlantExtrakt">PlantExtrakt</option>
+              <option value="ADAMS VISION">ADAMS VISION</option>
             </Form.Control>
           </Form.Group>
           <Form.Group className="mb-3" controlId="countInStock">
