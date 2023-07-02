@@ -124,7 +124,9 @@ export default function CartScreen() {
                   >
                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
                     produse) :
-                    {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}{' '}
+                    {cartItems
+                      .reduce((a, c) => a + c.price * c.quantity, 0)
+                      .toFixed(2)}{' '}
                     RON
                   </h3>
                 </ListGroup.Item>

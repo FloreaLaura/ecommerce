@@ -206,6 +206,7 @@ export default function ProductCreateScreen() {
             <option value="Sirop">Sirop</option>
             <option value="Suplimente">Suplimente</option>
             <option value="Ulei">Ulei</option>
+            <option value="Alimente">Alimente</option>
           </Form.Control>
         </Form.Group>
 
@@ -225,6 +226,7 @@ export default function ProductCreateScreen() {
             <option value="Parapharm">Parapharm</option>
             <option value="PlantExtrakt">PlantExtrakt</option>
             <option value="ADAMS VISION">ADAMS VISION</option>
+            <option value="BUN DE TOT">BUN DE TOT</option>
           </Form.Control>
         </Form.Group>
         <Form.Group className="mb-3" controlId="countInStock">
