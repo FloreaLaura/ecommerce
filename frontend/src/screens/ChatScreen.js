@@ -256,7 +256,7 @@ export default function ChatScreen() {
           <div>
             <div className="row">
               <strong>Conversație cu {selectedUser.name}</strong>
-              <small>(Mesajele dispar automat după 12 ore)</small>
+              <small>(Mesajele dispar automat după 24 de ore)</small>
             </div>
 
             <ul ref={uiMessagesRef}>

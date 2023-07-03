@@ -24,15 +24,29 @@ messageRouter.post(
   })
 );
 
+// messageRouter.get(
+//   '/',
+//   isAuth,
+//   expressAsyncHandler(async (req, res) => {
+//     const twelveHoursAgo = new Date();
+//     twelveHoursAgo.setHours(twelveHoursAgo.getHours() - 12);
+
+//     const messages = await Message.find({
+//       createdAt: { $gt: twelveHoursAgo },
+//     }).sort({ createdAt: 1 });
+//     res.send(messages);
+//   })
+// );
+
 messageRouter.get(
   '/',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const twelveHoursAgo = new Date();
-    twelveHoursAgo.setHours(twelveHoursAgo.getHours() - 12);
+    const twentyFourHoursAgo = new Date();
+    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
 
     const messages = await Message.find({
-      createdAt: { $gt: twelveHoursAgo },
+      createdAt: { $gt: twentyFourHoursAgo },
     }).sort({ createdAt: 1 });
     res.send(messages);
   })

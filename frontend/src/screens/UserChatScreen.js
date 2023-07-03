@@ -192,7 +192,7 @@ function UserChatScreen(props) {
       <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>
         Chat cu administratorul
       </h2>
-      <small>(Mesajele dispar automat după 12 ore)</small>
+      <small>(Mesajele dispar automat după 24 de ore)</small>
 
       <div className="chatbox" ref={chatboxRef}>
         <div className="userChatBox">
