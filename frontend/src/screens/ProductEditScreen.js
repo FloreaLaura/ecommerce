@@ -274,6 +274,8 @@ export default function ProductEditScreen() {
               <option value="PlantExtrakt">PlantExtrakt</option>
               <option value="ADAMS VISION">ADAMS VISION</option>
               <option value="BUN DE TOT">BUN DE TOT</option>
+              <option value="OIL BIO">OIL BIO</option>
+              <option value="RAPUNZEL">RAPUNZEL</option>
             </Form.Control>
           </Form.Group>
           <Form.Group className="mb-3" controlId="countInStock">

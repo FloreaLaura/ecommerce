@@ -239,11 +239,13 @@ productRouter.get(
   })
 );
 
+const PAGE_SIZE2 = 12;
+
 productRouter.get(
   '/search',
   expressAsyncHandler(async (req, res) => {
     const { query } = req;
-    const pageSize = query.pageSize || PAGE_SIZE;
+    const pageSize = query.pageSize || PAGE_SIZE2;
     const page = query.page || 1;
     const category = query.category || '';
     const price = query.price || '';
@@ -333,6 +335,7 @@ productRouter.get('/slug/:slug', async (req, res) => {
     res.status(404).send({ message: 'Product Not Found' });
   }
 });
+
 productRouter.get('/:id', async (req, res) => {
   const product = await Product.findById(req.params.id);
   if (product) {

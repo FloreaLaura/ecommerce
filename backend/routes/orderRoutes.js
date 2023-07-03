@@ -7,6 +7,32 @@ import { isAuth, isAdmin, mailgun, payOrderEmailTemplate } from '../utils.js';
 
 const orderRouter = express.Router();
 
+const PAGE_SIZE = 10;
+
+// orderRouter.get(
+//   '/',
+//   isAuth,
+//   isAdmin,
+//   expressAsyncHandler(async (req, res) => {
+//     const { query } = req;
+//     const page = query.page || 1;
+//     const pageSize = query.pageSize || PAGE_SIZE;
+
+//     const orders = await Order.find()
+//       .populate('user', 'name')
+//       .sort({ createdAt: -1 })
+//       .skip(pageSize * (page - 1))
+//       .limit(pageSize);
+//     res.send(orders);
+//     // const countOrders = await Order.countDocuments();
+//     // res.send({
+//     //   orders,
+//     //   countOrders,
+//     //   page,
+//     //   pages: Math.ceil(countOrders / pageSize),
+//     // });
+//   })
+// );
 orderRouter.get(
   '/',
   isAuth,
